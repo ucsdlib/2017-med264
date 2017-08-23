@@ -1,0 +1,22 @@
+
+###Getting data from an article
+
+1. We've found an article on [Cancer risk reduction and reproductive concerns in female BRCA1/2 mutation carriers](http://dx.doi.org/10.1007/s10689-007-9171-7). With a DOI of 10.1007/s10689-007-9171-7. 
+2. We will find the PMID via the DOI using the entrez function `entrez_search`.
+
+Now, what sorts of data are available from other NCBI database for this paper?
+
+```{r links}
+gen_anal <- entrez_search(db="pubmed", term="10.1038/nature11514")
+gen_data <- entrez_link(db="all", id=gen_anal$ids, dbfrom="pubmed")
+gen_data
+```
+In this case all the data is in the `links` element -- the databases linked off the PMID in NCBI:
+
+```{r showlinks}
+wcancer_data$links
+id <- wcancer_data$links$pubmed_homologene
+wcancer_gene <- entrez_fetch(db="homologene", id=id, rettype="fasta")
+cat(substr(wcancer_gene, 1, 237))
+```
+

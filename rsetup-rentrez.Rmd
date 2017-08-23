@@ -1,0 +1,4 @@
+##Install
+
+`rentrez` is on CRAN, so you can get the latest stable release with `install.packages("rentrez")`. This repository will sometimes be a little ahead of the CRAN version, if you want the latest (and possibly greatest) version you can install the current github version using Hadley Wickham's [devtools](https://github.com/hadley/devtools).
+

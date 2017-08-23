@@ -1,0 +1,139 @@
+---
+title: "MED264: Rentrez Tutorial"
+author: "Tim Dennis"
+date: "`r Sys.Date()`"
+output: 
+  html_document: 
+    toc: yes
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#"
+)
+knitr::opts_knit$set(upload.fun = knitr::imgur_upload, base.url = NULL)  
+
+```
+
+```{r, count_recs, echo=FALSE}
+library(rentrez)
+count_recs <- function(db, denom) {
+    nrecs <-  rentrez::entrez_db_summary(db)["Count"]
+    round(as.integer(nrecs)/denom, 1)
+}
+```
+
+## NCBI
+
+NCBI has a lot of data in it.  As of today, it has: 
+
+* `r count_recs("pubmed",1e6)` million papers in [PubMed](http://www.ncbi.nlm.nih.gov/pubmed/),
+   * including `r count_recs("pmc", 1e6)` million full-text records available in [PubMed Central](http://www.ncbi.nlm.nih.gov/pubmed/)
+*  [The NCBI Nucleotide Database](http://www.ncbi.nlm.nih.gov/nuccore) (which includes GenBank) has data for `r count_recs("nuccore", 1e6)` million different sequences
+* [dbSNP](http://www.ncbi.nlm.nih.gov/snp/) describes
+`r count_recs("snp", 1e6)` million different genetic variants
+
+All records can be cross-referenced with the  `r round(entrez_search(db="taxonomy", term='species[RANK]')$count/1e6,2)` million species in the [NCBI taxonomy](www.ncbi.nlm.nih.gov/taxonomy) or `r count_recs("omim", 1e3)` thousand disease-associated records in [OMIM](http://www.ncbi.nlm.nih.gov/omim).
+
+##rentrez
+
+`rentrez` provides functions that work with the [NCBI Eutils](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+API to search, download data from, and otherwise interact with NCBI databases.
+
+```
+library(devtools)
+install_github("ropensci/rentrez")
+```
+##rentrez Uses the EUtils API
+
+* Read more about [EUtils](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+* Working with the EUtils API will often require making multiple calls using the entrez package.
+* Python has a module with similar functionality in the Biopython module; http://biopython.org/wiki/Main_Page
+
+## Gettting started with rentrez 
+
+### Install
+
+From the R Cran repository: 
+
+```{r eval=FALSE}
+install.packages('rentrez')
+```
+
+From the development branch: 
+
+```{r eval=FALSE}
+install_github("ropensci/rentrez")
+```
+
+`library()` tells our R environment to load the package for use.
+
+```{r}
+library(rentrez)
+```
+
+We can use `entrez_dbs` to get a list of the databases we can search. 
+
+```{r}
+entrez_dbs()
+```
+
+
+**Functions that help you learn about NCBI databases**
+
+| Function name            | Return                                               |
+|--------------------------|------------------------------------------------------|
+| `entrez_db_summary()`    | Brief description of what the database is            |
+| `entrez_db_searchable()` | Set of search terms that can used with this database |
+| `entrez_db_links() `     | Set of databases that might contain linked records   |
+
+
+Let's retrieve a description of on of the databases: 
+
+```{r}
+entrez_db_summary('dbvar')
+#entrez_db_summary('snp')
+```
+
+We can also use `entrez_db_searchable` to see what search fields and qualifiers are allowable:
+
+```{r}
+entrez_db_searchable("sra")
+```
+
+Check out <https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers> for more information on the search term qualifiers. 
+
+###A Simple Example: Find by DOI
+
+**Use a DOI to return the PMID of an article using `entrez_search`** 
+
+Use an article DOI: 
+[Cancer risk reduction and reproductive concerns in female BRCA1/2 mutation carriers](http://dx.doi.org/10.1007/s10689-007-9171-7). DOI of 10.1007/s10689-007-9171-7. 
+
+```{r}
+library(rentrez)
+#wcancer_paper <- entrez_search(db="pubmed", term="10.1007/s10689-007-9171-7[doi]")
+wcancer_paper <- entrez_search(db="pubmed", term="10.1002/ijc.21536[doi]")
+
+wcancer_paper$ids
+```
+
+**Get some summary info**
+```{r}
+wcan_summary <- entrez_summary(db="pubmed", wcancer_paper$ids)
+wcan_summary$title
+wcan_summary$authors
+```
+
+### Search Terms:  `entrez_search()`
+
+* introductin the feilds 
+* adding stuff
+* using mesh terms
+* counting - use ted's example
+
+### Linking docs: `entrez_link()`
+
+* from known item
+* 

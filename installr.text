@@ -1,0 +1,38 @@
+## R
+
+[R](http://www.r-project.org) is a programming language that is
+especially powerful for data exploration, visualization, and statistical
+analysis. To interact with R, we use [RStudio](http://www.rstudio.com/).
+
+#### Windows {#r-windows}
+
+Install R by downloading and running [this .exe
+file](http://cran.r-project.org/bin/windows/base/release.htm) from
+[CRAN](http://cran.r-project.org/index.html). Also, please install the
+[RStudio IDE](http://www.rstudio.com/ide/download/desktop).
+
+#### Mac OS X {#r-macosx}
+
+Install R by downloading and running [this .pkg
+file](http://cran.r-project.org/bin/macosx/R-latest.pkg) from
+[CRAN](http://cran.r-project.org/index.html). Also, please install the
+[RStudio IDE](http://www.rstudio.com/ide/download/desktop).
+
+
+#### Linux {#r-linux}
+
+You can download the binary files for your distribution from
+[CRAN](http://cran.r-project.org/index.html). Or you can use your
+package manager (e.g. for Debian/Ubuntu run
+`sudo apt-get install r-base` and for Fedora run `sudo yum install R`).
+Also, please install the [RStudio
+IDE](http://www.rstudio.com/ide/download/desktop).
+
+
+##Install rentrez
+
+`rentrez` is on CRAN, so you can get the latest stable release with `install.packages("rentrez")`. The GitHub repository <https://github.com/ropensci/rentrez> will sometimes be a little ahead of the CRAN version, if you want the latest (and possibly greatest) version you can install the current github version using Hadley Wickham's [devtools](https://github.com/hadley/devtools). There might be issues with installing rentrez because of underlying dependencies. It installed easily in Mac OS.
+
+library(devtools)  
+install_github("ropensci/rentrez")
+

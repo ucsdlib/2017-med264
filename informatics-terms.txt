@@ -1,0 +1,21 @@
+1. 2000–2002,N,2. 2003–2005,N,3. 2006–2008,N,4. 2009–2011,N
+Databases, Genetic,229,Image Interpretation, Computer-Assisted,3413,Radiotherapy, Intensity-Modulated (2–4),841,Radiotherapy, Intensity-Modulated (2–4),1290
+Databases, Protein,225,Image Enhancement (1,2),2082,Natural Language Processing,547,Data Mining (3,4),718
+Image Enhancement (1,2),80,Pattern Recognition, Automated,1754,Biometry,358,Electronic Health Records (3,4),593
+Environmental Monitoring,75,Artificial Intelligence,1676,Contrast Media,329,Predictive Value of Tests (3,4),569
+Geographic Information Systems,70,Signal Processing, Computer-Assisted,1152,Diffusion Magnetic Resonance Imaging,322,Brain Mapping,357
+Equipment Failure Analysis,42,Numerical Analysis, Computer-Assisted (1,2),577,Diagnostic Imaging,289,Neoplasm Staging,326
+Subtraction Technique,28,Movement,427,Predictive Value of Tests (3,4),285,Severity of Illness Index,285
+Numerical Analysis, Computer-Assisted (1,2),28,Video Recording,213,Access to Information,255,Lung,276
+Motion,16,Body Burden (1,2),206,Radiation Injuries,248,Combined Modality Therapy,256
+PubMed,16,Relative Biological Effectiveness (1,2),197,Program Evaluation,234,Quality Control,254
+Stress, Mechanical (1,2),11,Positron-Emission Tomography,187,Semantics (3,4),230,Logistic Models,234
+Elasticity,10,Stress, Mechanical (1,2),183,Interviews as Topic,192,Semantics (3,4),220
+Protein Interaction Mapping,9,Models, Neurological,181,Quality of Health Care,185,Age Factors,189
+Microscopy, Fluorescence,8,Transducers (1,2),181,Health Knowledge, Attitudes, Practice,182,Communication,179
+Transducers (1,2),8,Electroencephalography,176,Cross-Sectional Studies,153,Statistics, Non-parametric,178
+Proteomics,6,Ventricular Dysfunction, Left,108,Longitudinal Studies,151,Computers,175
+Relative Biological Effectiveness (1,2),5,Data Compression (1,2),107,Patient Satisfaction,136,Protein Structure, Tertiary (3,4),169
+Data Compression (1,2),4,Diffusion Magnetic Resonance Imaging (1–3),86,Protein Structure, Tertiary (3,4),123,Photons,163
+Body Burden (1,2),3,Radiotherapy, Intensity-Modulated (2–4),56,Data Mining (3,4),14,Drug Therapy, Computer-Assisted,141
+Diffusion Magnetic Resonance Imaging (1–3),1,Medical Order Entry Systems,45,Electronic Health Records (3,4),2,Genome,127

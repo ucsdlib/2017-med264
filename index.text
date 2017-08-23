@@ -1,0 +1,14 @@
+# MED264 - UCSD 
+
+* Demo of [rentrez](https://cran.r-project.org/web/packages/rentrez/index.html)
+  * Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+* For hands on activity install R, RStudio, & rentrez [Install](installr.html)
+* Examples adapted from the GitHub rentrez tutorial < https://github.com/ropensci/rentrez>
+
+# Hands-on
+
+1. Find an article to use for entrez_search() - you need the DOI
+2. Use entrez_link() to link to databases in ncbi
+3. Print out what databases are linked 
+4. Use entrez_fetch() to retreive you db, try 'fasta' format or use ?entrez_fetch to see what other formats work.
+5. Print out the returned object cat() prints a concatenated object, substr will grab a slice of the character returned. 

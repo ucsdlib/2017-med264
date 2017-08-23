@@ -1,0 +1,79 @@
+---
+title: "Exercises"
+author: "Tim Dennis"
+date: "October 2, 2016"
+output: 
+  html_document: 
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+library(rentrez)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Excercises 
+### 1: DOI Search
+
+Given the following DOI, use pubmed database to fill in the following information: 
+
+**DOI: 10.1111/nyas.13259**
+
+1. TITLE: 
+2. AUTHORS: 
+3. SOURCE
+4. PUBDATE: 
+
+###2: Keyword search 
+
+Search entrez for a topic covered by this class.
+
+###3: Qualifiers 
+
+Pick a data base in entrez and find the available qualifiers `entrez_db_searchable("sra")`. You can look up the search fields and qualifiers here: <https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers>. Using the qualifiers perform a search on a topic of your choice. Explore the object that R returns. 
+
+
+###4: Mesh Search
+
+Now, perform a Mesh search. The example we used in class was: 
+
+```{r, mesh}
+entrez_search(db   = "pubmed",
+              term = "(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])")
+```
+
+Try different Mesh terms in pubmed. You can look up Mesh terms here <http://www.ncbi.nlm.nih.gov/mesh> or query the `Mesh` databse with the term: `entrez_search(db="mesh", term =...)`.
+
+##Answers
+
+###1: DOI Search
+```{r answer1}
+ex1_paper <- entrez_search(db="pubmed", term="10.1111/nyas.13259[doi]")
+ex1_summary <- entrez_summary(db="pubmed", ex1_paper$ids)
+ex1_summary$title
+ex1_summary$authors
+ex1_summary$source
+ex1_summary$pubdate
+```
+
+###2. Keyword search
+
+```{r searchids_2, eval=FALSE}
+another_r_search <- entrez_search(db="pubmed", term="Natural Language Processing", retmax=40)
+another_r_search
+```
+
+###3: Qualifiers: 
+
+```{r, Tt3-qual}
+entrez_search(db="sra",
+              term="(Tetrahymena thermophila[ORGN] OR Tetrahymena borealis[ORGN]) AND 2013:2015[PDAT]",
+              retmax=0)
+```
+
+###4: Mesh search
+
+```{r, mesh-ans}
+entrez_search(db   = "pubmed",
+              term = "(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])")
+```

@@ -1,0 +1,220 @@
+---
+title: "homework-solutions"
+author: "Tim Dennis"
+date: "10/4/2016"
+output: html_document
+---
+
+## 1
+>
+> Look at the help for the `c` function. What kind of vector do you
+> expect you will create if you evaluate the following:
+> 
+> ~~~
+> c(1, 2, 3)
+> c('d', 'e', 'f')
+> c(1, 2, 'f')`
+> ~~~
+> >
+> > The `c()` function creates a vector, in which all elements are the
+> > same type. In the first case, the elements are numeric, in the
+> > second, they are characters, and in the third they are characters:
+> > the numeric values "coerced" to be characters.
+
+## 2 
+
+>Start by making a vector with the numbers 1 through 26. Multiply the vector by 2, and give the resulting vector names >A through Z (hint: there is a built in vector called LETTERS)
+>
+>>x <- 1:26  
+>>x <- x * 2  
+>>names(x) <- LETTERS  
+
+## 3 
+>
+> There are several subtly different ways to call variables, observations and
+> elements from data.frames:
+>
+> - `cats[1]`  
+> - `cats[[1]]`  
+> - `cats$coat`  
+> - `cats`["coat"]  
+> - `cats[1, 1]`  
+> - `cats[, 1]`  
+> - `cats[1, ]`  
+>
+> Try out these examples and explain what is returned by each one.
+>
+> `cats <- read.csv('https://raw.githubusercontent.com/jt14den/med264/gh-pages/data/feline-data.csv')`  
+>
+> *Hint:* Use the function `typeof()` to examine what is returned in each case.
+>
+> > ~~~
+> > cats[1]
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> >     coat
+> > 1 calico
+> > 2  black
+> > 3  tabby
+> > ~~~
+> >
+> > We can think of a data frame as a list of vectors. The single brace `[1]`
+> returns the first slice of the list, as another list. In this case it is the
+> first column of the data frame.
+> > 
+> > ~~~
+> > cats[[1]]
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> > [1] calico black  tabby 
+> > Levels: black calico tabby
+> > ~~~
+> > The double brace `[[1]]` returns the contents of the list item. In this case
+> it is the contents of the first column, a _vector_ of type _factor_.
+> > 
+> > ~~~
+> > cats$coat
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> > [1] calico black  tabby 
+> > Levels: black calico tabby
+> > ~~~
+> > This example uses the `$` character to address items by name. _coat_ is the
+> first column of the data frame, again a _vector_ of type _factor_.
+> > 
+> > ~~~
+> > cats["coat"]
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> >     coat
+> > 1 calico
+> > 2  black
+> > 3  tabby
+> > ~~~
+> > Here we are using a single brace `["coat"]` replacing the index number with
+> the column name. Like example 1, the returned object is a _list_.
+> > 
+> > ~~~
+> > cats[1, 1]
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> > [1] calico
+> > Levels: black calico tabby
+> > ~~~
+> > This example uses a single brace, but this time we provide row and column
+> coordinates. The returned object is the value in row 1, column 1. The object
+> is an _integer_ but because it is part of a _vector_ of type _factor_, R
+> displays the label "calico" associated with the integer value.
+> > 
+> > ~~~
+> > cats[, 1]
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> > [1] calico black  tabby 
+> > Levels: black calico tabby
+> > ~~~
+> > Like the previous example we use single braces and provide row and column
+> coordinates. The row coordinate is not specified, R interprets this missing
+> value as all the elements in this _column_ _vector_.
+> > 
+> > ~~~
+> > cats[1, ]
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> >     coat weight likes_string
+> > 1 calico    2.1         TRUE
+> > ~~~
+> > Again we use the single brace with row and column coordinates. The column
+> coordinate is not specified. The return value is a _list_ containing all the
+> values in the first row.
+
+## 4
+>
+> Given the following code:
+>
+> 
+> ~~~
+> x <- c(5.4, 6.2, 7.1, 4.8, 7.5)
+> names(x) <- c('a', 'b', 'c', 'd', 'e')
+> print(x)
+> ~~~
+> 
+> 
+> 
+> ~~~
+>   a   b   c   d   e 
+> 5.4 6.2 7.1 4.8 7.5 
+> ~~~
+>
+> 1. Write a subsetting command to return the values in x that are greater than 4 and less than 7.
+>
+> > Given the following code:
+> >
+> > 
+> > ~~~
+> > x <- c(5.4, 6.2, 7.1, 4.8, 7.5)
+> > names(x) <- c('a', 'b', 'c', 'd', 'e')
+> > print(x)
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> >   a   b   c   d   e 
+> > 5.4 6.2 7.1 4.8 7.5 
+> > ~~~
+> >
+> > 1. Write a subsetting command to return the values in x that are greater than 4 and less than 7.
+> >
+> > 
+> > ~~~
+> > x_subset <- x[x<7 & x>4]
+> > print(x_subset)
+> > ~~~
+> > 
+> > 
+> > 
+> > ~~~
+> >   a   b   d 
+> > 5.4 6.2 4.8 
+> > ~~~
+
+## 5
+>
+> Write a function called `kelvin_to_celsius` that takes a temperature in Kelvin
+> and returns that temperature in Celsius
+>
+> Hint: To convert from Kelvin to Celsius you minus 273.15  
+>
+> >
+> > Write a function called `kelvin_to_celsius` that takes a temperature in Kelvin
+> > and returns that temperature in Celsius
+> >
+> > 
+> > ~~~
+> > kelvin_to_celsius <- function(temp) {
+> >  celsius <- temp - 273.15
+> >  return(celsius)
+> > }
+> > ~~~
