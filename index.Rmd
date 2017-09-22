@@ -1,6 +1,6 @@
 ---
 title: "MED 264 - UCSD - R"
-author: "Reid Otsuji adapted from Tim Dennis Med264 lessons"
+author: "Reid Otsuji adapted from Tim Dennis UCSD Med264 lessons"
 date: "`r Sys.Date()`"
 output: html_document
 ---
