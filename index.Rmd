@@ -14,7 +14,7 @@ knitr::opts_knit$set(upload.fun = knitr::imgur_upload, base.url = NULL)
 
 ```
 
-## Intro to R - 10/4
+## Intro to R - 10/5
 ### Setup
 
 This lesson assumes you have the R, RStudio software installed on your computer.
