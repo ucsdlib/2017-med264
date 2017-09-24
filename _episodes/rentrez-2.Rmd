@@ -1,0 +1,284 @@
+---
+title: "Rentrez Notebook"
+output: html_notebook
+---
+
+#Rentrez for Med264 Fall 2017
+
+## Load rentrez
+```{r}
+library(rentrez)
+```
+
+## Find list of databases:
+```{r}
+entrez_dbs()
+```
+## Functions to help you learn about NCBI databases:
+```{r}
+entrez_db_summary("cdd")
+```
+
+## Look up search terms to use with the selected database:
+```{r}
+entrez_db_searchable("sra")
+```
+
+## Searching databases:
+using entrez_Search()
+```{r}
+r_search <- entrez_search(db="pubmed", term="R Language")
+```
+
+## print results:
+```{r}
+r_search
+```
+
+## print only unique ids contained in r_search object:
+```{r}
+r_search$ids
+```
+
+## Building Search Terms
+example seaerch for Tetrahymena thermophila using organism [ORGN] field:
+```{r}
+entrez_search(db="sra",
+              term="Tetrahymena thermophila[ORGN]",
+              retmax=0)
+```
+
+## Narrow search to most recent records:
+[PDAT] field - data sequence added to Genbank
+colon  specifies range
+```{r}
+entrez_search(db="sra",
+              term="Tetrahymena thermophila[ORGN] AND 2013:2017[PDAT]",
+              retmax=0)
+```
+
+## Find recent records including T.borealis using boolean AND and ORs
+
+```{r}
+entrez_search(db="sra",
+              term="(Tetrahymena thermophila[ORGN] OR Tetrahymena Borealis[ORGN]) AND 2013:2017[PDAT]", retmax=0)
+```
+
+## Get list of available terms:
+```{r}
+entrez_db_searchable("sra")
+```
+```{r}
+entrez_db_searchable("pubmed")
+```
+
+## Using filters:
+limit records returned by a search set by criteria:
+NCBI allows searches using MeSH terms.
+Queries using MESH terms:
+Results show number of records matching a given search.
+```{r}
+entrez_search(db="pubmed",
+              term="(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])")
+```
+
+# Advanced counting 
+Learning more about the search - composition of, trends in, the records stored in the NCBI database using only the search utility. 
+E.g. track rise of the scientific buzzword "stereoptypies" in Pubmed, creating search terms for the PDAT (date of publication) field:
+```{r}
+search_year <- function(year, term){
+  query <- paste(term, "AND (", year, "[PDAT]")
+  entrez_search(db="pubmed", term=query, retmax=0)$count
+}
+
+year <- 2000:2018
+
+papers <- sapply(year, search_year, term="stereotypies", USE.NAMES=FALSE)
+
+plot(year, papers, type="b", main = "The rise of stereopypies")
+
+```
+
+#Finding Cross-References: using entrez_link()
+connecting records in NCBI to other records or external data sources.
+entrez_link() can be used to find cross-referenced records.
+basic case: need ID, the data bast ID comes from (dbfrom) and the name of the database to find linked records (db):
+
+```{r}
+all_the_links <- entrez_link(dbfrom='gene', id=351, db='all')
+all_the_links
+```
+$links is a list that contains the IDs for the linked records
+#print $links to generate list
+```{r}
+all_the_links$links
+```
+
+#list elements are in the format [source_database]_[linked_database]
+these elements contain a vector of linked-IDs
+to find open access publications associated with the gene we could get linked records in Pubmed Central:
+```{r}
+all_the_links$links$gene_pmc[1:10]
+```
+# or if interested in this genes role in diseases we cound find links to clinVar:
+```{r}
+all_the_links$links$gene_clinvar
+
+```
+
+#narrowing search focus
+if we know before hand what sort of links we'd like to find, can use the db argument to narrow the fous of a call to entrez_link.
+#e.g. intersted in knowing about all of the RNA transcripts associated with the Amyloid Beta Precursor gene in humans.
+transcript sequences are stored in the nucleotide database (nuccore in EUtils). 
+to find transcripts associated with a given gene we need to set dbfrom=gene and db=nuccore
+```{r}
+nuc_links <- entrez_link(dbfrom='gene', id=351, db='nuccore')
+nuc_links
+```
+#pirnt $links to genereate list
+```{r}
+nuc_links$links
+```
+
+#object returned contains links to the nucleotide database generally, but also to special subsets of that database like refseq.
+we can use the narrower set of links to find IDs that match unique transcripts from the gene of interest.
+```{r}
+nuc_links$links$gene_nuccore_refseqrna
+```
+
+# we can not use these IDs in calls to entrez_fetch() or entrez_summary() to learn more about the transcripts they represent. 
+Cover later on.
+
+
+#External inkst using entrez_link
+entrez_link can connect to external databases. e.g. finding full text papers in pubmed such as the first paper linked toAmyloid Beta Precursor with ID 25500142.
+Can find links to the full text of the paper using entrez_link by setting cmd argument to 'llinks'
+```{r}
+paper_links <- entrez_link(dbfrom = "pubmed", id=25500142, cmd='llinks')
+paper_links
+```
+# each elements of the 'linkout' object contains information about an external source of data on this paper.
+#print $linkouts
+```{r}
+paper_links$linkouts
+```
+#each of these $linkout objects contain a lot of informatoin, URL is most useful.
+rentrez provides a function linkout_urls to easily extract the URL 
+
+```{r}
+linkout_urls(paper_links)
+```
+# use help ?entrez_link to look up more uses for the cmds
+
+# using more than one id:
+pass multiple IDs to entrez_link()
+will return single elink object containing the complete set of links for ALL of the IDs specified.  
+# e.g. lookning for specific gene IDs:
+```{r}
+all_links_together <- entrez_link(db="protein", dbfrom="gene",  id=c("93100", "223646"))
+all_links_together
+```
+# $links contains IDs from gene_protein database
+print protein IDs
+```{r}
+all_links_together$links$gene_protein
+```
+
+# We have lost track of which protein iD is linked to which gene ID.
+to retain the linked information we can set ID to TRUE which will give a list of elink objects, with each one containing links from a single gene ID:
+
+```{r}
+all_links_sep <- entrez_link(db="protein", dbfrom="gene",  id=c("93100", "223646"), by_id=TRUE)
+all_links_sep
+```
+# lapply function 
+```{r}
+?lapply
+```
+
+```{r}
+lapply(all_links_sep, function(x) x$links$gene_protein)
+```
+
+#Getting summary data using entrez_summary()
+learning a little more about the records from entrez_search or entrez_link().
+use entrez_fetch() for full records in varying formats
+use entrez_summary() to return less information about each record in a simple format.
+Most often summary  records will have informatino you need.
+rentrez provides functions to parse and sumarize summary records.
+
+#the summary record 
+using entrez_summary() takes a vector of unique IDs for the samples you want to get summary information from.
+e.g. find information aobut the paper Taxize using its Pubmed ID:
+```{r}
+taxize_sum <- entrez_summary(db="pubmed", id="24555091")
+taxize_sum
+```
+
+#object returned by entrez_summary behaves like a list.
+extract elements using $. 
+e.g. convert Pubmed ID to another article identifier
+```{r}
+taxize_sum$articleids
+```
+e.g. or see how many times the article has been cited in Pubmed central papers:
+```{r}
+taxize_sum$pmcrefcount
+```
+
+#dealing with many records
+if you give entrez_summary() a vector with more than one ID you'll get a list of summary records back. 
+e.g. using the Plasmodium vivax papers we found when we used entrez_search() earlier, fetch some summary data on each paper:
+```{r}
+vivax_search <- entrez_search(db="pubmed", term="(vivax malaria[MeSH] AND (folic acid antagonists[MeSH])")
+multi_summs <- entrez_summary(db="pubmed",id=vivax_search$ids)
+```
+
+rentrez provides a helper fundtion extract_from_esummary() that takes one or more elements from every summary record in one of these lists. (note: fulljournalname is one of the record elements displayed from entrez_summary list)
+```{r}
+extract_from_esummary(multi_summs, "fulljournalname")
+```
+```{r}
+date_and_cite <- extract_from_esummary(multi_summs, c("pubdate","pmcrefcount","title"))
+knitr::kable(head(t(date_and_cite)), row_names=FALSE)
+```
+
+# Fetching full records using entrez_fetch()
+sometimes the summary record doesn't have the information you need. to get a complete representation of the record you can use entrez_fetch, using the argument rettype to specify the format you'd like to see the record in.
+
+#fetch DNA sequences in fasta format
+extend the example given from the entrez_link() section about finding transcripts for a given gene.
+fetch cDNA sequences of those transcripts
+start by repeating the steps in the earlier example to get nucleotide IDs for refseq transcripts of 2 genes:
+```{r}
+gene_ids <- c(351, 11647)
+linked_seq_ids <- entrez_link(dbfrom="gene", id=gene_ids, db="nuccore")
+```
+
+```{r}
+linked_transcripts <- linked_seq_ids$links$gene_nuccore_refseqrna
+head(linked_transcripts)
+```
+#get sequences with entrez_fetch, setting rettype to "fasta" (the list of formats available for each database in table):
+```{r}
+all_recs <- entrez_fetch(db="nuccore", id=linked_transcripts, rettype="fasta")
+class(all_recs)
+```
+```{r}
+nchar(all_recs)
+```
+
+###result is a huge character vector.
+take a look at the top of the file
+```{r}
+cat(strwrap(substr(all_recs, 1, 500)), sep="\n4
+    1")
+```
+
+# write to file for some other application
+```{r}
+write(all_recs, file="my_transcripts.fasta")
+```
+
+# Write to temporary file to use in R session 
+
