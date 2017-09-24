@@ -1,6 +1,6 @@
 ---
 title: "MED264: Rentrez Tutorial"
-author: "Tim Dennis"
+author: "Reid Otsuji adpted from Tim Dennis MED264"
 date: "`r Sys.Date()`"
 output: 
   html_document: 
@@ -46,10 +46,12 @@ All records can be cross-referenced with the  `r round(entrez_search(db="taxonom
 `rentrez` provides functions that work with the [NCBI Eutils](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
 API to search, download data from, and otherwise interact with NCBI databases.
 
-```
+```{r eval=FALSE}
 library(devtools)
 install_github("ropensci/rentrez")
 ```
+
+
 ##rentrez Uses the EUtils API
 
 * Read more about [EUtils](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
