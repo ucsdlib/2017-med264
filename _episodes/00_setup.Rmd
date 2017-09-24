@@ -23,26 +23,25 @@ You will need the Desktop version for your computer.
 To familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: https://www.datacamp.com/. You can also learn R from within R with a tutorial called [Swirl](http://swirlstats.com/). Follow the instructions here  [http://swirlstats.com/students.html](http://swirlstats.com/students.html).
 
 
+## Intro to NCBI Database Lesson
+National Center for Biotechnology Information (NCBI) EUtils API:
+
+* Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+* [NCBI EUtils API information](https://www.ncbi.nlm.nih.gov/home/develop/api/)
 
 
-## Intro to NCBI Database
-National Center for Biotechnology Information (NCBI) Overview:
-
-## Rentrez & Data Vis
+## Rentrez & Data Vis Lessons
 
 * [Lecture notes- Entrez](1_rentrez_episode.html)
 * [Lecture notes - Counting *onmics](2_entrez_search.html)
-* Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
 * Examples adapted from the GitHub rentrez tutorial <https://github.com/ropensci/rentrez>
 * Check out the other packages provided by [ROpenscience](http://ropensci.org/)
-
-
-
 
 
 ### Lecture Notes 
 
 * [Intro to R](r-intro.html)
 * [Dataframes & Subsetting](data-frame-subsetting.html)
-
+* [Lecture notes- Entrez](1_rentrez_episode.html)
+* [Lecture notes - Counting *onmics](2_entrez_search.html)
 
