@@ -39,10 +39,10 @@ You will need the Desktop version for your computer.
 * [Dataframes & Subsetting](data-frame-subsetting.html)
 
 
-## Rentrez & Data Vis - 10/6
+## Rentrez & Data Vis - 10/5
 
-* [Lecture notes- Entrez](1_rentrez_episode.html)
-* [Lecture notes - Counting *onmics](2_entrez_search.html)
+* [Lecture notes- Entrez](/_episodes/01_rentrez_episode.html)
+* [Lecture notes - Counting *onmics](/_episodes/02_entrez_search.html)
 * Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
 * Examples adapted from the GitHub rentrez tutorial <https://github.com/ropensci/rentrez>
 * Check out the other packages provided by [ROpenscience](http://ropensci.org/)
