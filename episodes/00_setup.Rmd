@@ -1,0 +1,48 @@
+---
+title: "2017 MED264 UCSD Rentrez R Lesson Notebook"
+author: "Reid Otsuji adapted from Tim Dennis UCSD Med264 lessons"
+date: "`r Sys.Date()`"
+output: html_notebook
+---
+
+
+## Setup R and RStudio
+
+This lesson assumes you have the R, RStudio software installed on your computer.
+
+Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to date.
+
+R can be downloaded [here](https://cran.r-project.org/mirrors.html).
+
+RStudio is an environment for developing using R.
+It can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).
+You will need the Desktop version for your computer.
+
+
+## Getting a headstart
+If you are new to R and RStudio, you can familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: https://www.datacamp.com/. You can also learn R from within R with a tutorial called [Swirl](http://swirlstats.com/). Follow the instructions here  [http://swirlstats.com/students.html](http://swirlstats.com/students.html).
+
+
+## Intro to NCBI Database Lesson
+This lesson will be focusing on the National Center for Biotechnology Information (NCBI) EUtils API:
+
+* Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+* [NCBI EUtils API information](https://www.ncbi.nlm.nih.gov/home/develop/api/)
+
+
+## Rentrez & Data Vis Lessons
+
+* [Lecture notes- Entrez](~/_episodes/01_rentrez_episode.html)
+* [Lecture notes - Counting *onmics](/_episodes/02_entrez_search.html)
+* Examples adapted from the GitHub rentrez tutorial <https://github.com/ropensci/rentrez>
+* Check out the other packages provided by [ROpenscience](http://ropensci.org/)
+
+
+## Lecture Notes 
+<!-- 
+* [Intro to R](r-intro.html)
+* [Dataframes & Subsetting](data-frame-subsetting.html) -->
+
+* [Lecture notes- Entrez](1_rentrez_episode.html)
+* [Lecture notes - Counting *onmics](2_entrez_search.html)
+
