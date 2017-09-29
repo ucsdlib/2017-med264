@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: html_notebook
 ---
 
-## Intro to R - (Assignment before class)
+
 ## Setup R and RStudio
 
 This lesson assumes you have the R, RStudio software installed on your computer.
@@ -20,11 +20,11 @@ You will need the Desktop version for your computer.
 
 
 ## Getting a headstart
-To familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: https://www.datacamp.com/. You can also learn R from within R with a tutorial called [Swirl](http://swirlstats.com/). Follow the instructions here  [http://swirlstats.com/students.html](http://swirlstats.com/students.html).
+If you are new to R and RStudio, you can familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: https://www.datacamp.com/. You can also learn R from within R with a tutorial called [Swirl](http://swirlstats.com/). Follow the instructions here  [http://swirlstats.com/students.html](http://swirlstats.com/students.html).
 
 
 ## Intro to NCBI Database Lesson
-National Center for Biotechnology Information (NCBI) EUtils API:
+This lesson will be focusing on the National Center for Biotechnology Information (NCBI) EUtils API:
 
 * Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
 * [NCBI EUtils API information](https://www.ncbi.nlm.nih.gov/home/develop/api/)
@@ -32,16 +32,17 @@ National Center for Biotechnology Information (NCBI) EUtils API:
 
 ## Rentrez & Data Vis Lessons
 
-* [Lecture notes- Entrez](1_rentrez_episode.html)
-* [Lecture notes - Counting *onmics](2_entrez_search.html)
+* [Lecture notes- Entrez](/ucsdlib/_episodes/1_rentrez_episode.html)
+* [Lecture notes - Counting *onmics](_episodes/2_entrez_search.html)
 * Examples adapted from the GitHub rentrez tutorial <https://github.com/ropensci/rentrez>
 * Check out the other packages provided by [ROpenscience](http://ropensci.org/)
 
 
-### Lecture Notes 
-
+## Lecture Notes 
+<!-- 
 * [Intro to R](r-intro.html)
-* [Dataframes & Subsetting](data-frame-subsetting.html)
+* [Dataframes & Subsetting](data-frame-subsetting.html) -->
+
 * [Lecture notes- Entrez](1_rentrez_episode.html)
 * [Lecture notes - Counting *onmics](2_entrez_search.html)
 
