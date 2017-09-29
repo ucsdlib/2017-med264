@@ -15,9 +15,12 @@ knitr::opts_knit$set(upload.fun = knitr::imgur_upload, base.url = NULL)
 ```
 
 ## Intro to R - 10/5
-### Setup
+
+## Setup R and RStudio
 
 This lesson assumes you have the R, RStudio software installed on your computer.
+
+Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to date.
 
 R can be downloaded [here](https://cran.r-project.org/mirrors.html).
 
@@ -25,33 +28,47 @@ RStudio is an environment for developing using R.
 It can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).
 You will need the Desktop version for your computer.
 
+
+## Getting a headstart
+If you are new to R and RStudio, you can familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: https://www.datacamp.com/. You can also learn R from within R with a tutorial called [Swirl](http://swirlstats.com/). Follow the instructions here  [http://swirlstats.com/students.html](http://swirlstats.com/students.html).
+
+## Intro to NCBI Database Lesson
+This lesson will be focusing on the National Center for Biotechnology Information (NCBI) EUtils API:
+
+* Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+* [NCBI EUtils API information](https://www.ncbi.nlm.nih.gov/home/develop/api/)
+
+
+<!--
 ### Data 
 
 * Gapminder data [download](gapminder-FiveYearData.csv)
   * Make a folder for today's lecture 'med264-r'
   * Make a `data/` folder inside of the folder you created.
   * Download and put in `data/` folder inside your project folder. 
+-->
   
-
+<!--
 ### Lecture Notes 
 
 * [Intro to R](r-intro.html)
 * [Dataframes & Subsetting](data-frame-subsetting.html)
+-->
 
+## Rentrez & Data Vis Lessons
 
-## Rentrez & Data Vis - 10/5
-
-* [Lecture notes- Entrez](/_episodes/01_rentrez_episode.html)
-* [Lecture notes - Counting *onmics](/_episodes/02_entrez_search.html)
-* Rentrez Uses [EUtils API](http://www.ncbi.nlm.nih.gov/books/NBK25500/)
+* [Lecture notes- Entrez](_episodes/01_rentrez_episode.html)
+* [Lecture notes - Counting *onmics](_episodes/02_entrez_search.html)
 * Examples adapted from the GitHub rentrez tutorial <https://github.com/ropensci/rentrez>
 * Check out the other packages provided by [ROpenscience](http://ropensci.org/)
 
+<!--
 ## QUIZ & Homework
 
 
 * [Homework for Intro to R](homework-into-r.html)
 * [Homework answers](homework-solution.html)
+
   
 ## Take the QUIZ! 
 
@@ -63,3 +80,5 @@ Go to:
 ### Quiz Answers
 
 [Quiz Answers](Question_10_06_2016__11_56_QZ_med264introtor.pdf)
+
+-->

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Reid Otsuji adapted from Tim Dennis UCSD Med264 lessons" />
 
-<meta name="date" content="2017-09-26" />
+<meta name="date" content="2017-09-28" />
 
 <title>MED 264 - UCSD - R</title>
 
@@ -119,64 +119,75 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">MED 264 - UCSD - R</h1>
 <h4 class="author"><em>Reid Otsuji adapted from Tim Dennis UCSD Med264 lessons</em></h4>
-<h4 class="date"><em>2017-09-26</em></h4>
+<h4 class="date"><em>2017-09-28</em></h4>
 
 </div>
 
 
 <div id="intro-to-r---105" class="section level2">
 <h2>Intro to R - 10/5</h2>
-<div id="setup" class="section level3">
-<h3>Setup</h3>
+</div>
+<div id="setup-r-and-rstudio" class="section level2">
+<h2>Setup R and RStudio</h2>
 <p>This lesson assumes you have the R, RStudio software installed on your computer.</p>
+<p>Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to date.</p>
 <p>R can be downloaded <a href="https://cran.r-project.org/mirrors.html">here</a>.</p>
 <p>RStudio is an environment for developing using R. It can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>. You will need the Desktop version for your computer.</p>
 </div>
-<div id="data" class="section level3">
-<h3>Data</h3>
-<ul>
-<li>Gapminder data <a href="gapminder-FiveYearData.csv">download</a></li>
-<li>Make a folder for today’s lecture ‘med264-r’</li>
-<li>Make a <code>data/</code> folder inside of the folder you created.</li>
-<li>Download and put in <code>data/</code> folder inside your project folder.</li>
-</ul>
+<div id="getting-a-headstart" class="section level2">
+<h2>Getting a headstart</h2>
+<p>If you are new to R and RStudio, you can familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: <a href="https://www.datacamp.com/" class="uri">https://www.datacamp.com/</a>. You can also learn R from within R with a tutorial called <a href="http://swirlstats.com/">Swirl</a>. Follow the instructions here <a href="http://swirlstats.com/students.html" class="uri">http://swirlstats.com/students.html</a>.</p>
 </div>
-<div id="lecture-notes" class="section level3">
-<h3>Lecture Notes</h3>
+<div id="intro-to-ncbi-database-lesson" class="section level2">
+<h2>Intro to NCBI Database Lesson</h2>
+<p>This lesson will be focusing on the National Center for Biotechnology Information (NCBI) EUtils API:</p>
 <ul>
-<li><a href="r-intro.html">Intro to R</a></li>
-<li><a href="data-frame-subsetting.html">Dataframes &amp; Subsetting</a></li>
-</ul>
-</div>
-</div>
-<div id="rentrez-data-vis---105" class="section level2">
-<h2>Rentrez &amp; Data Vis - 10/5</h2>
-<ul>
-<li><a href="/_episodes/01_rentrez_episode.html">Lecture notes- Entrez</a></li>
-<li><a href="/_episodes/02_entrez_search.html">Lecture notes - Counting *onmics</a></li>
 <li>Rentrez Uses <a href="http://www.ncbi.nlm.nih.gov/books/NBK25500/">EUtils API</a></li>
+<li><a href="https://www.ncbi.nlm.nih.gov/home/develop/api/">NCBI EUtils API information</a></li>
+</ul>
+<!--
+### Data 
+
+* Gapminder data [download](gapminder-FiveYearData.csv)
+  * Make a folder for today's lecture 'med264-r'
+  * Make a `data/` folder inside of the folder you created.
+  * Download and put in `data/` folder inside your project folder. 
+-->
+<!--
+### Lecture Notes 
+
+* [Intro to R](r-intro.html)
+* [Dataframes & Subsetting](data-frame-subsetting.html)
+-->
+</div>
+<div id="rentrez-data-vis-lessons" class="section level2">
+<h2>Rentrez &amp; Data Vis Lessons</h2>
+<ul>
+<li><a href="_episodes/01_rentrez_episode.html">Lecture notes- Entrez</a></li>
+<li><a href="_episodes/02_entrez_search.html">Lecture notes - Counting *onmics</a></li>
 <li>Examples adapted from the GitHub rentrez tutorial <a href="https://github.com/ropensci/rentrez" class="uri">https://github.com/ropensci/rentrez</a></li>
 <li>Check out the other packages provided by <a href="http://ropensci.org/">ROpenscience</a></li>
 </ul>
-</div>
-<div id="quiz-homework" class="section level2">
-<h2>QUIZ &amp; Homework</h2>
-<ul>
-<li><a href="homework-into-r.html">Homework for Intro to R</a></li>
-<li><a href="homework-solution.html">Homework answers</a></li>
-</ul>
-</div>
-<div id="take-the-quiz" class="section level2">
-<h2>Take the QUIZ!</h2>
-<p>Go to:</p>
-<ol style="list-style-type: decimal">
-<li><a href="https://b.socrative.com/login/student/" class="uri">https://b.socrative.com/login/student/</a></li>
-<li>USE the room number: QTKGZXF6G</li>
-</ol>
-<div id="quiz-answers" class="section level3">
-<h3>Quiz Answers</h3>
-<p><a href="Question_10_06_2016__11_56_QZ_med264introtor.pdf">Quiz Answers</a></p>
-</div>
+<!--
+## QUIZ & Homework
+
+
+* [Homework for Intro to R](homework-into-r.html)
+* [Homework answers](homework-solution.html)
+
+  
+## Take the QUIZ! 
+
+Go to: 
+
+1. <https://b.socrative.com/login/student/>
+2. USE the room number: QTKGZXF6G
+
+### Quiz Answers
+
+[Quiz Answers](Question_10_06_2016__11_56_QZ_med264introtor.pdf)
+
+-->
 </div>
 
 
