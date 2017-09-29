@@ -23,12 +23,13 @@ count_recs <- function(db, denom) {
     round(as.integer(nrecs)/denom, 1)
 }
 ```
-## Take the QUIZ! 
+<!--## Take the QUIZ! 
 
 Go to: 
 
 1. <https://b.socrative.com/login/student/>
 2. USE the room number: QTKGZXF6G
+-->
 
 ## NCBI
 
@@ -133,7 +134,7 @@ wcan_summary$title
 wcan_summary$authors
 ```
 
-**[Challenge](exercises.html)** (5min)
+# **[Challenge](exercises.html)** (5min)
 
 ## Search Terms:  `entrez_search()`
 
@@ -258,6 +259,11 @@ Or if were interested in this gene's role in diseases we could find links to cli
 all_the_links$links$gene_clinvar
 
 ```
+
+
+
+
+
 
 ## Where to learn more???
 
