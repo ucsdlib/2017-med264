@@ -11,7 +11,7 @@
 
 <meta name="author" content="Reid Otsuji adapted from Tim Dennis UCSD Med264 lessons" />
 
-<meta name="date" content="2017-09-25" />
+<meta name="date" content="2017-09-28" />
 
 <title>2017 MED264 UCSD Rentrez R Lesson Notebook</title>
 
@@ -170,15 +170,12 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">2017 MED264 UCSD Rentrez R Lesson Notebook</h1>
 <h4 class="author"><em>Reid Otsuji adapted from Tim Dennis UCSD Med264 lessons</em></h4>
-<h4 class="date"><em>2017-09-25</em></h4>
+<h4 class="date"><em>2017-09-28</em></h4>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<div id="intro-to-r---assignment-before-class" class="section level2">
-<h2>Intro to R - (Assignment before class)</h2>
-</div>
 <div id="setup-r-and-rstudio" class="section level2">
 <h2>Setup R and RStudio</h2>
 <p>This lesson assumes you have the R, RStudio software installed on your computer.</p>
@@ -188,11 +185,11 @@ $(document).ready(function () {
 </div>
 <div id="getting-a-headstart" class="section level2">
 <h2>Getting a headstart</h2>
-<p>To familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: <a href="https://www.datacamp.com/" class="uri">https://www.datacamp.com/</a>. You can also learn R from within R with a tutorial called <a href="http://swirlstats.com/">Swirl</a>. Follow the instructions here <a href="http://swirlstats.com/students.html" class="uri">http://swirlstats.com/students.html</a>.</p>
+<p>If you are new to R and RStudio, you can familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: <a href="https://www.datacamp.com/" class="uri">https://www.datacamp.com/</a>. You can also learn R from within R with a tutorial called <a href="http://swirlstats.com/">Swirl</a>. Follow the instructions here <a href="http://swirlstats.com/students.html" class="uri">http://swirlstats.com/students.html</a>.</p>
 </div>
 <div id="intro-to-ncbi-database-lesson" class="section level2">
 <h2>Intro to NCBI Database Lesson</h2>
-<p>National Center for Biotechnology Information (NCBI) EUtils API:</p>
+<p>This lesson will be focusing on the National Center for Biotechnology Information (NCBI) EUtils API:</p>
 <ul>
 <li>Rentrez Uses <a href="http://www.ncbi.nlm.nih.gov/books/NBK25500/">EUtils API</a></li>
 <li><a href="https://www.ncbi.nlm.nih.gov/home/develop/api/">NCBI EUtils API information</a></li>
@@ -201,24 +198,25 @@ $(document).ready(function () {
 <div id="rentrez-data-vis-lessons" class="section level2">
 <h2>Rentrez &amp; Data Vis Lessons</h2>
 <ul>
-<li><a href="1_rentrez_episode.html">Lecture notes- Entrez</a></li>
-<li><a href="2_entrez_search.html">Lecture notes - Counting *onmics</a></li>
+<li><a href="_episodes/01_rentrez_episode.html">Lecture notes- Entrez</a></li>
+<li><a href="_episodes/02_entrez_search.html">Lecture notes - Counting *onmics</a></li>
 <li>Examples adapted from the GitHub rentrez tutorial <a href="https://github.com/ropensci/rentrez" class="uri">https://github.com/ropensci/rentrez</a></li>
 <li>Check out the other packages provided by <a href="http://ropensci.org/">ROpenscience</a></li>
 </ul>
-<div id="lecture-notes" class="section level3">
-<h3>Lecture Notes</h3>
+</div>
+<div id="lecture-notes" class="section level2">
+<h2>Lecture Notes</h2>
+<!-- 
+* [Intro to R](r-intro.html)
+* [Dataframes & Subsetting](data-frame-subsetting.html) -->
 <ul>
-<li><a href="r-intro.html">Intro to R</a></li>
-<li><a href="data-frame-subsetting.html">Dataframes &amp; Subsetting</a></li>
 <li><a href="1_rentrez_episode.html">Lecture notes- Entrez</a></li>
 <li><a href="2_entrez_search.html">Lecture notes - Counting *onmics</a></li>
 </ul>
 <!-- rnb-text-end -->
 </div>
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiMjAxNyBNRUQyNjQgVUNTRCBSZW50cmV6IFIgTGVzc29uIE5vdGVib29rIgphdXRob3I6ICJSZWlkIE90c3VqaSBhZGFwdGVkIGZyb20gVGltIERlbm5pcyBVQ1NEIE1lZDI2NCBsZXNzb25zIgpkYXRlOiAiYHIgU3lzLkRhdGUoKWAiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMjIEludHJvIHRvIFIgLSAoQXNzaWdubWVudCBiZWZvcmUgY2xhc3MpCiMjIFNldHVwIFIgYW5kIFJTdHVkaW8KClRoaXMgbGVzc29uIGFzc3VtZXMgeW91IGhhdmUgdGhlIFIsIFJTdHVkaW8gc29mdHdhcmUgaW5zdGFsbGVkIG9uIHlvdXIgY29tcHV0ZXIuCgpQbGVhc2UgZW5zdXJlIHlvdSBoYXZlIHRoZSBsYXRlc3QgdmVyc2lvbiBvZiBSIGFuZCBSU3R1ZGlvIGluc3RhbGxlZCBvbiB5b3VyIG1hY2hpbmUuIFRoaXMgaXMgaW1wb3J0YW50LCBhcyBzb21lIHBhY2thZ2VzIHVzZWQgaW4gdGhlIHdvcmtzaG9wIG1heSBub3QgaW5zdGFsbCBjb3JyZWN0bHkgKG9yIGF0IGFsbCkgaWYgUiBpcyBub3QgdXAgdG8gZGF0ZS4KClIgY2FuIGJlIGRvd25sb2FkZWQgW2hlcmVdKGh0dHBzOi8vY3Jhbi5yLXByb2plY3Qub3JnL21pcnJvcnMuaHRtbCkuCgpSU3R1ZGlvIGlzIGFuIGVudmlyb25tZW50IGZvciBkZXZlbG9waW5nIHVzaW5nIFIuCkl0IGNhbiBiZSBkb3dubG9hZGVkIFtoZXJlXShodHRwczovL3d3dy5yc3R1ZGlvLmNvbS9wcm9kdWN0cy9yc3R1ZGlvL2Rvd25sb2FkLykuCllvdSB3aWxsIG5lZWQgdGhlIERlc2t0b3AgdmVyc2lvbiBmb3IgeW91ciBjb21wdXRlci4KCgojIyBHZXR0aW5nIGEgaGVhZHN0YXJ0ClRvIGZhbWlsaWFyaXplIHlvdXJzZWxmIHdpdGggc29tZSBvZiB0aGUgYmFzaWMgc3ludGF4IGFuZCBzdHJ1Y3R1cmUgb2YgUiwgdGFrZSB0aGUgZnJlZSBvbmxpbmUgUiBjb3Vyc2UgZnJvbSBkYXRhY2FtcC5jb206IGh0dHBzOi8vd3d3LmRhdGFjYW1wLmNvbS8uIFlvdSBjYW4gYWxzbyBsZWFybiBSIGZyb20gd2l0aGluIFIgd2l0aCBhIHR1dG9yaWFsIGNhbGxlZCBbU3dpcmxdKGh0dHA6Ly9zd2lybHN0YXRzLmNvbS8pLiBGb2xsb3cgdGhlIGluc3RydWN0aW9ucyBoZXJlICBbaHR0cDovL3N3aXJsc3RhdHMuY29tL3N0dWRlbnRzLmh0bWxdKGh0dHA6Ly9zd2lybHN0YXRzLmNvbS9zdHVkZW50cy5odG1sKS4KCgojIyBJbnRybyB0byBOQ0JJIERhdGFiYXNlIExlc3NvbgpOYXRpb25hbCBDZW50ZXIgZm9yIEJpb3RlY2hub2xvZ3kgSW5mb3JtYXRpb24gKE5DQkkpIEVVdGlscyBBUEk6CgoqIFJlbnRyZXogVXNlcyBbRVV0aWxzIEFQSV0oaHR0cDovL3d3dy5uY2JpLm5sbS5uaWguZ292L2Jvb2tzL05CSzI1NTAwLykKKiBbTkNCSSBFVXRpbHMgQVBJIGluZm9ybWF0aW9uXShodHRwczovL3d3dy5uY2JpLm5sbS5uaWguZ292L2hvbWUvZGV2ZWxvcC9hcGkvKQoKCiMjIFJlbnRyZXogJiBEYXRhIFZpcyBMZXNzb25zCgoqIFtMZWN0dXJlIG5vdGVzLSBFbnRyZXpdKDFfcmVudHJlel9lcGlzb2RlLmh0bWwpCiogW0xlY3R1cmUgbm90ZXMgLSBDb3VudGluZyAqb25taWNzXSgyX2VudHJlel9zZWFyY2guaHRtbCkKKiBFeGFtcGxlcyBhZGFwdGVkIGZyb20gdGhlIEdpdEh1YiByZW50cmV6IHR1dG9yaWFsIDxodHRwczovL2dpdGh1Yi5jb20vcm9wZW5zY2kvcmVudHJlej4KKiBDaGVjayBvdXQgdGhlIG90aGVyIHBhY2thZ2VzIHByb3ZpZGVkIGJ5IFtST3BlbnNjaWVuY2VdKGh0dHA6Ly9yb3BlbnNjaS5vcmcvKQoKCiMjIyBMZWN0dXJlIE5vdGVzIAoKKiBbSW50cm8gdG8gUl0oci1pbnRyby5odG1sKQoqIFtEYXRhZnJhbWVzICYgU3Vic2V0dGluZ10oZGF0YS1mcmFtZS1zdWJzZXR0aW5nLmh0bWwpCiogW0xlY3R1cmUgbm90ZXMtIEVudHJlel0oMV9yZW50cmV6X2VwaXNvZGUuaHRtbCkKKiBbTGVjdHVyZSBub3RlcyAtIENvdW50aW5nICpvbm1pY3NdKDJfZW50cmV6X3NlYXJjaC5odG1sKQoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiMjAxNyBNRUQyNjQgVUNTRCBSZW50cmV6IFIgTGVzc29uIE5vdGVib29rIgphdXRob3I6ICJSZWlkIE90c3VqaSBhZGFwdGVkIGZyb20gVGltIERlbm5pcyBVQ1NEIE1lZDI2NCBsZXNzb25zIgpkYXRlOiAiYHIgU3lzLkRhdGUoKWAiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCgojIyBTZXR1cCBSIGFuZCBSU3R1ZGlvCgpUaGlzIGxlc3NvbiBhc3N1bWVzIHlvdSBoYXZlIHRoZSBSLCBSU3R1ZGlvIHNvZnR3YXJlIGluc3RhbGxlZCBvbiB5b3VyIGNvbXB1dGVyLgoKUGxlYXNlIGVuc3VyZSB5b3UgaGF2ZSB0aGUgbGF0ZXN0IHZlcnNpb24gb2YgUiBhbmQgUlN0dWRpbyBpbnN0YWxsZWQgb24geW91ciBtYWNoaW5lLiBUaGlzIGlzIGltcG9ydGFudCwgYXMgc29tZSBwYWNrYWdlcyB1c2VkIGluIHRoZSB3b3Jrc2hvcCBtYXkgbm90IGluc3RhbGwgY29ycmVjdGx5IChvciBhdCBhbGwpIGlmIFIgaXMgbm90IHVwIHRvIGRhdGUuCgpSIGNhbiBiZSBkb3dubG9hZGVkIFtoZXJlXShodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy9taXJyb3JzLmh0bWwpLgoKUlN0dWRpbyBpcyBhbiBlbnZpcm9ubWVudCBmb3IgZGV2ZWxvcGluZyB1c2luZyBSLgpJdCBjYW4gYmUgZG93bmxvYWRlZCBbaGVyZV0oaHR0cHM6Ly93d3cucnN0dWRpby5jb20vcHJvZHVjdHMvcnN0dWRpby9kb3dubG9hZC8pLgpZb3Ugd2lsbCBuZWVkIHRoZSBEZXNrdG9wIHZlcnNpb24gZm9yIHlvdXIgY29tcHV0ZXIuCgoKIyMgR2V0dGluZyBhIGhlYWRzdGFydApJZiB5b3UgYXJlIG5ldyB0byBSIGFuZCBSU3R1ZGlvLCB5b3UgY2FuIGZhbWlsaWFyaXplIHlvdXJzZWxmIHdpdGggc29tZSBvZiB0aGUgYmFzaWMgc3ludGF4IGFuZCBzdHJ1Y3R1cmUgb2YgUiwgdGFrZSB0aGUgZnJlZSBvbmxpbmUgUiBjb3Vyc2UgZnJvbSBkYXRhY2FtcC5jb206IGh0dHBzOi8vd3d3LmRhdGFjYW1wLmNvbS8uIFlvdSBjYW4gYWxzbyBsZWFybiBSIGZyb20gd2l0aGluIFIgd2l0aCBhIHR1dG9yaWFsIGNhbGxlZCBbU3dpcmxdKGh0dHA6Ly9zd2lybHN0YXRzLmNvbS8pLiBGb2xsb3cgdGhlIGluc3RydWN0aW9ucyBoZXJlICBbaHR0cDovL3N3aXJsc3RhdHMuY29tL3N0dWRlbnRzLmh0bWxdKGh0dHA6Ly9zd2lybHN0YXRzLmNvbS9zdHVkZW50cy5odG1sKS4KCgojIyBJbnRybyB0byBOQ0JJIERhdGFiYXNlIExlc3NvbgpUaGlzIGxlc3NvbiB3aWxsIGJlIGZvY3VzaW5nIG9uIHRoZSBOYXRpb25hbCBDZW50ZXIgZm9yIEJpb3RlY2hub2xvZ3kgSW5mb3JtYXRpb24gKE5DQkkpIEVVdGlscyBBUEk6CgoqIFJlbnRyZXogVXNlcyBbRVV0aWxzIEFQSV0oaHR0cDovL3d3dy5uY2JpLm5sbS5uaWguZ292L2Jvb2tzL05CSzI1NTAwLykKKiBbTkNCSSBFVXRpbHMgQVBJIGluZm9ybWF0aW9uXShodHRwczovL3d3dy5uY2JpLm5sbS5uaWguZ292L2hvbWUvZGV2ZWxvcC9hcGkvKQoKCiMjIFJlbnRyZXogJiBEYXRhIFZpcyBMZXNzb25zCgoqIFtMZWN0dXJlIG5vdGVzLSBFbnRyZXpdKF9lcGlzb2Rlcy8wMV9yZW50cmV6X2VwaXNvZGUuaHRtbCkKKiBbTGVjdHVyZSBub3RlcyAtIENvdW50aW5nICpvbm1pY3NdKF9lcGlzb2Rlcy8wMl9lbnRyZXpfc2VhcmNoLmh0bWwpCiogRXhhbXBsZXMgYWRhcHRlZCBmcm9tIHRoZSBHaXRIdWIgcmVudHJleiB0dXRvcmlhbCA8aHR0cHM6Ly9naXRodWIuY29tL3JvcGVuc2NpL3JlbnRyZXo+CiogQ2hlY2sgb3V0IHRoZSBvdGhlciBwYWNrYWdlcyBwcm92aWRlZCBieSBbUk9wZW5zY2llbmNlXShodHRwOi8vcm9wZW5zY2kub3JnLykKCgojIyBMZWN0dXJlIE5vdGVzIAo8IS0tIAoqIFtJbnRybyB0byBSXShyLWludHJvLmh0bWwpCiogW0RhdGFmcmFtZXMgJiBTdWJzZXR0aW5nXShkYXRhLWZyYW1lLXN1YnNldHRpbmcuaHRtbCkgLS0+CgoqIFtMZWN0dXJlIG5vdGVzLSBFbnRyZXpdKDFfcmVudHJlel9lcGlzb2RlLmh0bWwpCiogW0xlY3R1cmUgbm90ZXMgLSBDb3VudGluZyAqb25taWNzXSgyX2VudHJlel9zZWFyY2guaHRtbCkKCg==</div>
 
 
 
