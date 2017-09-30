@@ -1,6 +1,6 @@
 ---
-title: "rentrez"
-date: "10/5/2016"
+title: "rentrez Searching Metadata"
+date: "10/5/2017"
 output: html_document
 ---
 
