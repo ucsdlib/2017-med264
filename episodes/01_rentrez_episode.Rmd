@@ -246,6 +246,7 @@ all_the_links
 all_the_links$links
 ```
 * names of the list elements are in the format `[source_database]_[linked_database]`  and the elements themselves contain a vector of linked-IDs
+
 * if we want to find open access publications associated with this gene we could get linked records
 in PubMed Central:
 
@@ -260,12 +261,156 @@ all_the_links$links$gene_clinvar
 
 ```
 
+# original lesson ended here - go to lesson 2 if less time
+
+
+## Narrowing our focus
+
+* If we know beforehand what sort of links we’d like to find, we can to use the `db` argument to narrow the focus of a call to `entrez_link()`.
+
+* For instance, say we are interested in knowing about all of the RNA transcripts associated with the Amyloid Beta Precursor gene in humans. 
+
+* Transcript sequences are stored in the nucleotide database (referred to as nuccore in EUtils), so to find transcripts associated with a given gene we need to set dbfrom=gene and db=nuccore.
 
 
 
+```{r}
+nuc_links <- entrez_link(dbfrom='gene', id=351, db='nuccore')
+nuc_links
+```
+
+```{r}
+nuc_links$links
+```
+
+The object we get back contains links to the nucleotide database generally, but also to special subsets of that database like `refseq`. 
+
+We can take advantage of this narrower set of links to find IDs that match unique transcripts from our gene of interest.
+
+
+```{r}
+nuc_links$links$gene_nuccore_refseqrna
+```
+
+We can use these ids in calls to `entrez_fetch()` or `entrez_summary()` to learn more about the transcripts they represent.
+
+
+## External links
+In addition to finding data within the NCBI, `entrez_link` can turn up connections to external databases. Perhaps the most interesting example is finding links to the full text of papers in PubMed. 
+
+For example, when I wrote this document the first paper linked to `Amyloid Beta Precursor` had a unique ID of `25500142`. We can find links to the full text of that paper with `entrez_link` by setting the cmd argument to `‘llinks’`:
+
+```{r}
+paper_links <- entrez_link(dbfrom="pubmed", id=25500142, cmd="llinks")
+paper_links
+```
+
+Each element of the `linkouts` object contains information about an external source of data on this paper:
+
+
+```{r}
+paper_links$linkouts
+```
+* Each of those linkout objects contains quite a lot of information, but the URL is probably the most useful. 
+
+* For that reason, `rentrez` provides the function `linkout_urls` to make extracting just the URL simple:
+
+```{r}
+linkout_urls(paper_links)
+```
+
+The full list of options for the cmd argument are given in in-line documentation `(?entrez_link)`. 
+
+If you are interested in finding full text records for a large number of articles checkout the package [fulltext](https://github.com/ropensci/fulltext) which makes use of multiple sources (including the NCBI) to discover the `full text` articles.
+
+## Using more than one ID 
+It is possible to pass more than one ID to `entrez_link()`. 
+
+By default, doing so will give you a single elink object containing the complete set of links for all of the IDs that you specified. 
+
+So, if you were looking for protein IDs related to specific genes you could do:
+ 
+```{r}
+all_links_together <- entrez_link(db="protein", dbfrom="gene", id=c("93100", "223646"))
+all_links_together
+```
+
+```{r}
+all_links_together$links$gene_protein
+```
+
+* Although this behaviour might sometimes be useful, it means we’ve lost track of which `protein` ID is linked to which `gene` ID. 
+
+* To retain that information we can set `by_id` to TRUE. This gives us a list of elink objects, each once containing links from a single gene ID:
+
+```{r}
+all_links_sep <- entrez_link(db="protein", dbfrom="gene", id=c("93100", "223646"), by_id = TRUE)
+all_links_sep
+```
+
+```{r}
+lapply(all_links_sep, function(x) x$links$gene_protein)
+```
+
+## Getting summary data: entrez_summary()
+* Having found the unique IDs for some records via `entrez_search` or `entrez_link()`, you are probably going to want to learn something about them. 
+
+* The Eutils API has two ways to get information about a record. 
+
+* `entrez_fetch()` returns ‘full’ records in varying formats and `entrez_summary()` returns less information about each record, but in relatively simple format. 
+
+* Very often the summary records have the information you are after, so rentrez provides functions to parse and summarise summary records.
+
+## The summary record
+* `entrez_summary()` takes a vector of unique IDs for the samples you want to get summary information from.
+
+Let’s start by finding out something about the paper describing `[Taxize](https://github.com/ropensci/taxize)`, using its PubMed ID:
+
+```{r}
+taxize_summ <- entrez_summary(db="pubmed", id=24555091)
+taxize_summ
+```
+* Once again, the object returned by `entrez_summary` behaves like a list, so you can extract elements using $. 
+
+* For instance, we could convert our PubMed ID to another article identifier…
+
+```{r}
+taxize_summ$articleids
+```
+
+* …or see how many times the article has been cited in PubMed Central papers
+
+```{r}
+taxize_summ$pmcrefcount
+```
+
+## Dealing with many records
+
+* If you give `entrez_summary()` a vector with more than one ID you’ll get a list of summary records back.
+
+* Let’s get those `Plasmodium vivax` papers we found in the `entrez_search()` section back, and fetch some summary data on each paper:
+
+```{r}
+vivax_search <- entrez_search(db = "pubmed", 
+                              term = "(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])")
+multi_summs <- entrez_summary(db="pubmed", id=vivax_search$ids)
+```
+
+* `rentrez` provides a helper function, `extract_from_esummary()` that takes one or more elements from every summary record in one of these lists. 
+
+* Here it is working with one…
+
+```{r}
+extract_from_esummary(multi_summs, "fulljournalname")
+```
+
+* and several elements
 
 
 ## Where to learn more???
+
+## Fetch a parsed XML document
+## Using NCBI's Web History features
 
 * Most of this tutorial was based on the [ROpenscience tutorial](https://ropensci.org/tutorials/rentrez_tutorial.html) on rentrez. 
 * I also used some of Ted Hart's [Rentrez demo](https://github.com/ropensci/workshops-scio14-2014-02) as part of SIO14. 

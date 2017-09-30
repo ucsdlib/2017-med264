@@ -137,7 +137,17 @@ $(document).ready(function () {
 <li><a href="#using-search-field-operators">Using search field operators</a></li>
 <li><a href="#precise-queries-using-mesh-terms">Precise queries using MeSH terms</a></li>
 <li><a href="#linking-docs-entrez_link">Linking docs: <code>entrez_link()</code></a></li>
+</ul></li>
+<li><a href="#original-lesson-ended-here---go-to-lesson-2-if-less-time">original lesson ended here - go to lesson 2 if less time</a><ul>
+<li><a href="#narrowing-our-focus">Narrowing our focus</a></li>
+<li><a href="#external-links">External links</a></li>
+<li><a href="#using-more-than-one-id">Using more than one ID</a></li>
+<li><a href="#getting-summary-data-entrez_summary">Getting summary data: entrez_summary()</a></li>
+<li><a href="#the-summary-record">The summary record</a></li>
+<li><a href="#dealing-with-many-records">Dealing with many records</a></li>
 <li><a href="#where-to-learn-more">Where to learn more???</a></li>
+<li><a href="#fetch-a-parsed-xml-document">Fetch a parsed XML document</a></li>
+<li><a href="#using-ncbis-web-history-features">Using NCBI’s Web History features</a></li>
 </ul></li>
 </ul>
 </div>
@@ -458,8 +468,8 @@ all_the_links</code></pre>
 # [51] gene_sparcle                   gene_taxonomy                 
 # [53] gene_unigene                   gene_varview</code></pre>
 <ul>
-<li>names of the list elements are in the format <code>[source_database]_[linked_database]</code> and the elements themselves contain a vector of linked-IDs</li>
-<li>if we want to find open access publications associated with this gene we could get linked records in PubMed Central:</li>
+<li><p>names of the list elements are in the format <code>[source_database]_[linked_database]</code> and the elements themselves contain a vector of linked-IDs</p></li>
+<li><p>if we want to find open access publications associated with this gene we could get linked records in PubMed Central:</p></li>
 </ul>
 <pre class="r"><code>all_the_links$links$gene_pmc[1:10]</code></pre>
 <pre><code>#  [1] &quot;5561919&quot; &quot;5560349&quot; &quot;5559291&quot; &quot;5548265&quot; &quot;5540602&quot; &quot;5434815&quot; &quot;5395029&quot;
@@ -485,8 +495,227 @@ all_the_links</code></pre>
 # [113] &quot;18097&quot;  &quot;18096&quot;  &quot;18095&quot;  &quot;18094&quot;  &quot;18093&quot;  &quot;18092&quot;  &quot;18091&quot; 
 # [120] &quot;18090&quot;  &quot;18089&quot;  &quot;18088&quot;  &quot;18087&quot;</code></pre>
 </div>
+</div>
+<div id="original-lesson-ended-here---go-to-lesson-2-if-less-time" class="section level1">
+<h1>original lesson ended here - go to lesson 2 if less time</h1>
+<div id="narrowing-our-focus" class="section level2">
+<h2>Narrowing our focus</h2>
+<ul>
+<li><p>If we know beforehand what sort of links we’d like to find, we can to use the <code>db</code> argument to narrow the focus of a call to <code>entrez_link()</code>.</p></li>
+<li><p>For instance, say we are interested in knowing about all of the RNA transcripts associated with the Amyloid Beta Precursor gene in humans.</p></li>
+<li><p>Transcript sequences are stored in the nucleotide database (referred to as nuccore in EUtils), so to find transcripts associated with a given gene we need to set dbfrom=gene and db=nuccore.</p></li>
+</ul>
+<pre class="r"><code>nuc_links &lt;- entrez_link(dbfrom='gene', id=351, db='nuccore')
+nuc_links</code></pre>
+<pre><code># elink object with contents:
+#  $links: IDs for linked records from NCBI
+# </code></pre>
+<pre class="r"><code>nuc_links$links</code></pre>
+<pre><code># elink result with information from 5 databases:
+# [1] gene_nuccore            gene_nuccore_mgc        gene_nuccore_pos       
+# [4] gene_nuccore_refseqgene gene_nuccore_refseqrna</code></pre>
+<p>The object we get back contains links to the nucleotide database generally, but also to special subsets of that database like <code>refseq</code>.</p>
+<p>We can take advantage of this narrower set of links to find IDs that match unique transcripts from our gene of interest.</p>
+<pre class="r"><code>nuc_links$links$gene_nuccore_refseqrna</code></pre>
+<pre><code>#  [1] &quot;324021747&quot; &quot;324021746&quot; &quot;324021739&quot; &quot;324021737&quot; &quot;324021735&quot;
+#  [6] &quot;228008405&quot; &quot;228008404&quot; &quot;228008403&quot; &quot;228008402&quot; &quot;228008401&quot;</code></pre>
+<p>We can use these ids in calls to <code>entrez_fetch()</code> or <code>entrez_summary()</code> to learn more about the transcripts they represent.</p>
+</div>
+<div id="external-links" class="section level2">
+<h2>External links</h2>
+<p>In addition to finding data within the NCBI, <code>entrez_link</code> can turn up connections to external databases. Perhaps the most interesting example is finding links to the full text of papers in PubMed.</p>
+<p>For example, when I wrote this document the first paper linked to <code>Amyloid Beta Precursor</code> had a unique ID of <code>25500142</code>. We can find links to the full text of that paper with <code>entrez_link</code> by setting the cmd argument to <code>‘llinks’</code>:</p>
+<pre class="r"><code>paper_links &lt;- entrez_link(dbfrom=&quot;pubmed&quot;, id=25500142, cmd=&quot;llinks&quot;)
+paper_links</code></pre>
+<pre><code># elink object with contents:
+#  $linkouts: links to external websites</code></pre>
+<p>Each element of the <code>linkouts</code> object contains information about an external source of data on this paper:</p>
+<pre class="r"><code>paper_links$linkouts</code></pre>
+<pre><code># $ID_25500142
+# $ID_25500142[[1]]
+# Linkout from Elsevier Science 
+#  $Url: https://linkinghub.elsevie ...
+# 
+# $ID_25500142[[2]]
+# Linkout from Europe PubMed Central 
+#  $Url: http://europepmc.org/abstr ...
+# 
+# $ID_25500142[[3]]
+# Linkout from Ovid Technologies, Inc. 
+#  $Url: http://ovidsp.ovid.com/ovi ...
+# 
+# $ID_25500142[[4]]
+# Linkout from PubMed Central 
+#  $Url: https://www.ncbi.nlm.nih.g ...
+# 
+# $ID_25500142[[5]]
+# Linkout from PubMed Central Canada 
+#  $Url: http://pubmedcentralcanada ...
+# 
+# $ID_25500142[[6]]
+# Linkout from MedlinePlus Health Information 
+#  $Url: https://medlineplus.gov/al ...
+# 
+# $ID_25500142[[7]]
+# Linkout from Mouse Genome Informatics (MGI) 
+#  $Url: http://www.informatics.jax ...</code></pre>
+<ul>
+<li><p>Each of those linkout objects contains quite a lot of information, but the URL is probably the most useful.</p></li>
+<li><p>For that reason, <code>rentrez</code> provides the function <code>linkout_urls</code> to make extracting just the URL simple:</p></li>
+</ul>
+<pre class="r"><code>linkout_urls(paper_links)</code></pre>
+<pre><code># $ID_25500142
+# [1] &quot;https://linkinghub.elsevier.com/retrieve/pii/S0014-4886(14)00393-8&quot;     
+# [2] &quot;http://europepmc.org/abstract/MED/25500142&quot;                             
+# [3] &quot;http://ovidsp.ovid.com/ovidweb.cgi?T=JS&amp;PAGE=linkout&amp;SEARCH=25500142.ui&quot;
+# [4] &quot;https://www.ncbi.nlm.nih.gov/pmc/articles/pmid/25500142/&quot;               
+# [5] &quot;http://pubmedcentralcanada.ca/pmcc/articles/pmid/25500142&quot;              
+# [6] &quot;https://medlineplus.gov/alzheimersdisease.html&quot;                         
+# [7] &quot;http://www.informatics.jax.org/reference/25500142&quot;</code></pre>
+<p>The full list of options for the cmd argument are given in in-line documentation <code>(?entrez_link)</code>.</p>
+<p>If you are interested in finding full text records for a large number of articles checkout the package <a href="https://github.com/ropensci/fulltext">fulltext</a> which makes use of multiple sources (including the NCBI) to discover the <code>full text</code> articles.</p>
+</div>
+<div id="using-more-than-one-id" class="section level2">
+<h2>Using more than one ID</h2>
+<p>It is possible to pass more than one ID to <code>entrez_link()</code>.</p>
+<p>By default, doing so will give you a single elink object containing the complete set of links for all of the IDs that you specified.</p>
+<p>So, if you were looking for protein IDs related to specific genes you could do:</p>
+<pre class="r"><code>all_links_together &lt;- entrez_link(db=&quot;protein&quot;, dbfrom=&quot;gene&quot;, id=c(&quot;93100&quot;, &quot;223646&quot;))
+all_links_together</code></pre>
+<pre><code># elink object with contents:
+#  $links: IDs for linked records from NCBI
+# </code></pre>
+<pre class="r"><code>all_links_together$links$gene_protein</code></pre>
+<pre><code>#  [1] &quot;1034662002&quot; &quot;1034662000&quot; &quot;1034661998&quot; &quot;1034661996&quot; &quot;1034661994&quot;
+#  [6] &quot;1034661992&quot; &quot;558472750&quot;  &quot;545685826&quot;  &quot;194394158&quot;  &quot;166221824&quot; 
+# [11] &quot;154936864&quot;  &quot;148697547&quot;  &quot;148697546&quot;  &quot;122346659&quot;  &quot;119602646&quot; 
+# [16] &quot;119602645&quot;  &quot;119602644&quot;  &quot;119602643&quot;  &quot;119602642&quot;  &quot;81899807&quot;  
+# [21] &quot;74215266&quot;   &quot;74186774&quot;   &quot;37787317&quot;   &quot;37787309&quot;   &quot;37787307&quot;  
+# [26] &quot;37787305&quot;   &quot;37589273&quot;   &quot;33991172&quot;   &quot;31982089&quot;   &quot;26339824&quot;  
+# [31] &quot;26329351&quot;   &quot;21619615&quot;   &quot;10834676&quot;</code></pre>
+<ul>
+<li><p>Although this behaviour might sometimes be useful, it means we’ve lost track of which <code>protein</code> ID is linked to which <code>gene</code> ID.</p></li>
+<li><p>To retain that information we can set <code>by_id</code> to TRUE. This gives us a list of elink objects, each once containing links from a single gene ID:</p></li>
+</ul>
+<pre class="r"><code>all_links_sep &lt;- entrez_link(db=&quot;protein&quot;, dbfrom=&quot;gene&quot;, id=c(&quot;93100&quot;, &quot;223646&quot;), by_id = TRUE)
+all_links_sep</code></pre>
+<pre><code># List of 2 elink objects,each containing
+#   $links: IDs for linked records from NCBI
+# </code></pre>
+<pre class="r"><code>lapply(all_links_sep, function(x) x$links$gene_protein)</code></pre>
+<pre><code># [[1]]
+#  [1] &quot;1034662002&quot; &quot;1034662000&quot; &quot;1034661998&quot; &quot;1034661996&quot; &quot;1034661994&quot;
+#  [6] &quot;1034661992&quot; &quot;558472750&quot;  &quot;545685826&quot;  &quot;194394158&quot;  &quot;166221824&quot; 
+# [11] &quot;154936864&quot;  &quot;122346659&quot;  &quot;119602646&quot;  &quot;119602645&quot;  &quot;119602644&quot; 
+# [16] &quot;119602643&quot;  &quot;119602642&quot;  &quot;37787309&quot;   &quot;37787307&quot;   &quot;37787305&quot;  
+# [21] &quot;33991172&quot;   &quot;21619615&quot;   &quot;10834676&quot;  
+# 
+# [[2]]
+#  [1] &quot;148697547&quot; &quot;148697546&quot; &quot;81899807&quot;  &quot;74215266&quot;  &quot;74186774&quot; 
+#  [6] &quot;37787317&quot;  &quot;37589273&quot;  &quot;31982089&quot;  &quot;26339824&quot;  &quot;26329351&quot;</code></pre>
+</div>
+<div id="getting-summary-data-entrez_summary" class="section level2">
+<h2>Getting summary data: entrez_summary()</h2>
+<ul>
+<li><p>Having found the unique IDs for some records via <code>entrez_search</code> or <code>entrez_link()</code>, you are probably going to want to learn something about them.</p></li>
+<li><p>The Eutils API has two ways to get information about a record.</p></li>
+<li><p><code>entrez_fetch()</code> returns ‘full’ records in varying formats and <code>entrez_summary()</code> returns less information about each record, but in relatively simple format.</p></li>
+<li><p>Very often the summary records have the information you are after, so rentrez provides functions to parse and summarise summary records.</p></li>
+</ul>
+</div>
+<div id="the-summary-record" class="section level2">
+<h2>The summary record</h2>
+<ul>
+<li><code>entrez_summary()</code> takes a vector of unique IDs for the samples you want to get summary information from.</li>
+</ul>
+<p>Let’s start by finding out something about the paper describing <code>[Taxize](https://github.com/ropensci/taxize)</code>, using its PubMed ID:</p>
+<pre class="r"><code>taxize_summ &lt;- entrez_summary(db=&quot;pubmed&quot;, id=24555091)
+taxize_summ</code></pre>
+<pre><code># esummary result with 42 items:
+#  [1] uid               pubdate           epubdate         
+#  [4] source            authors           lastauthor       
+#  [7] title             sorttitle         volume           
+# [10] issue             pages             lang             
+# [13] nlmuniqueid       issn              essn             
+# [16] pubtype           recordstatus      pubstatus        
+# [19] articleids        history           references       
+# [22] attributes        pmcrefcount       fulljournalname  
+# [25] elocationid       doctype           srccontriblist   
+# [28] booktitle         medium            edition          
+# [31] publisherlocation publishername     srcdate          
+# [34] reportnumber      availablefromurl  locationlabel    
+# [37] doccontriblist    docdate           bookname         
+# [40] chapter           sortpubdate       sortfirstauthor</code></pre>
+<ul>
+<li><p>Once again, the object returned by <code>entrez_summary</code> behaves like a list, so you can extract elements using $.</p></li>
+<li><p>For instance, we could convert our PubMed ID to another article identifier…</p></li>
+</ul>
+<pre class="r"><code>taxize_summ$articleids</code></pre>
+<pre><code>#       idtype idtypen                           value
+# 1     pubmed       1                        24555091
+# 2        doi       3 10.12688/f1000research.2-191.v2
+# 3        pmc       8                      PMC3901538
+# 4        rid       8                        24563765
+# 5        eid       8                        24555091
+# 6    version       8                               2
+# 7 version-id       8                               2
+# 8      pmcid       5             pmc-id: PMC3901538;</code></pre>
+<ul>
+<li>…or see how many times the article has been cited in PubMed Central papers</li>
+</ul>
+<pre class="r"><code>taxize_summ$pmcrefcount</code></pre>
+<pre><code># [1] 12</code></pre>
+</div>
+<div id="dealing-with-many-records" class="section level2">
+<h2>Dealing with many records</h2>
+<ul>
+<li><p>If you give <code>entrez_summary()</code> a vector with more than one ID you’ll get a list of summary records back.</p></li>
+<li><p>Let’s get those <code>Plasmodium vivax</code> papers we found in the <code>entrez_search()</code> section back, and fetch some summary data on each paper:</p></li>
+</ul>
+<pre class="r"><code>vivax_search &lt;- entrez_search(db = &quot;pubmed&quot;, 
+                              term = &quot;(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])&quot;)
+multi_summs &lt;- entrez_summary(db=&quot;pubmed&quot;, id=vivax_search$ids)</code></pre>
+<ul>
+<li><p><code>rentrez</code> provides a helper function, <code>extract_from_esummary()</code> that takes one or more elements from every summary record in one of these lists.</p></li>
+<li><p>Here it is working with one…</p></li>
+</ul>
+<pre class="r"><code>extract_from_esummary(multi_summs, &quot;fulljournalname&quot;)</code></pre>
+<pre><code>#                                                                                                                 24861816 
+# &quot;Infection, genetics and evolution : journal of molecular epidemiology and evolutionary genetics in infectious diseases&quot; 
+#                                                                                                                 24145518 
+#                                                                                  &quot;Antimicrobial agents and chemotherapy&quot; 
+#                                                                                                                 24007534 
+#                                                                                                        &quot;Malaria journal&quot; 
+#                                                                                                                 23230341 
+#                                                                                     &quot;The Korean journal of parasitology&quot; 
+#                                                                                                                 23043980 
+#                                                                                              &quot;Experimental parasitology&quot; 
+#                                                                                                                 20810806 
+#                                                                  &quot;The American journal of tropical medicine and hygiene&quot; 
+#                                                                                                                 20412783 
+#                                                                                                           &quot;Acta tropica&quot; 
+#                                                                                                                 19597012 
+#                                                                                          &quot;Clinical microbiology reviews&quot; 
+#                                                                                                                 17556611 
+#                                                                  &quot;The American journal of tropical medicine and hygiene&quot; 
+#                                                                                                                 17519409 
+#                                                                                                                   &quot;JAMA&quot; 
+#                                                                                                                 17368986 
+#                                                                                                 &quot;Trends in parasitology&quot; 
+#                                                                                                                 12374849 
+#                                        &quot;Proceedings of the National Academy of Sciences of the United States of America&quot;</code></pre>
+<ul>
+<li>and several elements</li>
+</ul>
+</div>
 <div id="where-to-learn-more" class="section level2">
 <h2>Where to learn more???</h2>
+</div>
+<div id="fetch-a-parsed-xml-document" class="section level2">
+<h2>Fetch a parsed XML document</h2>
+</div>
+<div id="using-ncbis-web-history-features" class="section level2">
+<h2>Using NCBI’s Web History features</h2>
 <ul>
 <li>Most of this tutorial was based on the <a href="https://ropensci.org/tutorials/rentrez_tutorial.html">ROpenscience tutorial</a> on rentrez.</li>
 <li>I also used some of Ted Hart’s <a href="https://github.com/ropensci/workshops-scio14-2014-02">Rentrez demo</a> as part of SIO14.</li>
