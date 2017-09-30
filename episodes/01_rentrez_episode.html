@@ -145,9 +145,14 @@ $(document).ready(function () {
 <li><a href="#getting-summary-data-entrez_summary">Getting summary data: entrez_summary()</a></li>
 <li><a href="#the-summary-record">The summary record</a></li>
 <li><a href="#dealing-with-many-records">Dealing with many records</a></li>
-<li><a href="#where-to-learn-more">Where to learn more???</a></li>
+<li><a href="#fetching-full-records-entrez_fetch">Fetching full records: <code>entrez_fetch()</code></a></li>
+</ul></li>
+<li><a href="#fetch-dna-sequences-in-fasta-format">Fetch DNA sequences in fasta format</a></li>
+<li><a href="#end-lesson-examples.">End Lesson examples.</a><ul>
+<li><a href="#where-to-learn-more">Where to learn more???</a><ul>
 <li><a href="#fetch-a-parsed-xml-document">Fetch a parsed XML document</a></li>
 <li><a href="#using-ncbis-web-history-features">Using NCBI’s Web History features</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
@@ -705,21 +710,106 @@ multi_summs &lt;- entrez_summary(db=&quot;pubmed&quot;, id=vivax_search$ids)</co
 #                                                                                                                 12374849 
 #                                        &quot;Proceedings of the National Academy of Sciences of the United States of America&quot;</code></pre>
 <ul>
-<li>and several elements</li>
+<li>and several elements (using knitr package used for dynamic report generation to display output in R)</li>
+</ul>
+<pre class="r"><code>date_and_cite &lt;- extract_from_esummary(multi_summs, c(&quot;pubdate&quot;, &quot;pmcrefcount&quot;, &quot;title&quot;))
+knitr::kable(head(t(date_and_cite)), row.names = FALSE)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">pubdate</th>
+<th align="left">pmcrefcount</th>
+<th align="left">title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2014 Aug</td>
+<td align="left"></td>
+<td align="left">Prevalence of mutations in the antifolates resistance-associated genes (dhfr and dhps) in Plasmodium vivax parasites from Eastern and Central Sudan.</td>
+</tr>
+<tr class="even">
+<td align="left">2014</td>
+<td align="left">5</td>
+<td align="left">Prevalence of polymorphisms in antifolate drug resistance molecular marker genes pvdhfr and pvdhps in clinical isolates of Plasmodium vivax from Kolkata, India.</td>
+</tr>
+<tr class="odd">
+<td align="left">2013 Sep 5</td>
+<td align="left">2</td>
+<td align="left">Prevalence and patterns of antifolate and chloroquine drug resistance markers in Plasmodium vivax across Pakistan.</td>
+</tr>
+<tr class="even">
+<td align="left">2012 Dec</td>
+<td align="left">13</td>
+<td align="left">Prevalence of drug resistance-associated gene mutations in Plasmodium vivax in Central China.</td>
+</tr>
+<tr class="odd">
+<td align="left">2012 Dec</td>
+<td align="left">7</td>
+<td align="left">Novel mutations in the antifolate drug resistance marker genes among Plasmodium vivax isolates exhibiting severe manifestations.</td>
+</tr>
+<tr class="even">
+<td align="left">2010 Sep</td>
+<td align="left">17</td>
+<td align="left">Mutations in the antifolate-resistance-associated genes dihydrofolate reductase and dihydropteroate synthase in Plasmodium vivax isolates from malaria-endemic countries.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fetching-full-records-entrez_fetch" class="section level2">
+<h2>Fetching full records: <code>entrez_fetch()</code></h2>
+<ul>
+<li><p>As useful as the summary records are, sometimes they just don’t have the information that you need.</p></li>
+<li><p>If you want a complete representation of a record you can use <code>entrez_fetch</code>, using the argument <code>rettype</code> to specify the format you’d like the record in.</p></li>
 </ul>
 </div>
+</div>
+<div id="fetch-dna-sequences-in-fasta-format" class="section level1">
+<h1>Fetch DNA sequences in fasta format</h1>
+<pre class="r"><code>gene_ids &lt;- c(351, 11647)
+linked_seq_ids &lt;- entrez_link(dbfrom=&quot;gene&quot;, id=gene_ids, db=&quot;nuccore&quot;)
+linked_transcripts &lt;- linked_seq_ids$links$gene_nuccore_refseqrna
+head(linked_transcripts)</code></pre>
+<pre><code># [1] &quot;1039766414&quot; &quot;1039766413&quot; &quot;1039766411&quot; &quot;1039766410&quot; &quot;1039766409&quot;
+# [6] &quot;563317856&quot;</code></pre>
+<p>Now we can get our sequences with <code>entrez_fetch</code>, setting <code>rettype</code> to <code>“fasta”</code> (the list of formats available for each database is give in this <a href="https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/">table</a>):</p>
+<pre class="r"><code>all_recs &lt;- entrez_fetch(db=&quot;nuccore&quot;, id=linked_transcripts, rettype = &quot;fasta&quot;)
+class(all_recs)</code></pre>
+<pre><code># [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>nchar(all_recs)</code></pre>
+<pre><code># [1] 55183</code></pre>
+<ul>
+<li>We now have a really huge character vector!</li>
+<li>Rather than printing all those thousands of bases we can take a peak at the top of the file:</li>
+</ul>
+<pre class="r"><code>cat(strwrap(substr(all_recs, 1, 500)), sep = &quot;\n&quot;)</code></pre>
+<pre><code># &gt;XM_006538500.2 PREDICTED: Mus musculus alkaline phosphatase,
+# liver/bone/kidney (Alpl), transcript variant X5, mRNA
+# GCGCCCGTGGCTTGCGCGACTCCCACGCGCGCGCTCCGCCGGTCCCGCAGTGACTGTCCCAGCCACGGTG
+# GGGACACGTGGAAGGTCAGGCTCCCTGGGGACCCACGACCTCCCGCTCCGGACTCCGCGCGCATCTCTTG
+# TGGCCTGGCAGGATGATGGACGTGGCGCCCGCTGAGCCGCTACCCAGGACCTCACCCTCGTGCTAAGCAC
+# CTGCTCCCGGTGCCCACGCGCCTCCGTAGTCCACAGCTGCGCCCTTCGTGGTCCCTTGGCACTCTGTCCC
+# GTTGGTGTCTAAAGTAGTTGGGGAGCAGCAGGAAGAAGGCACGTGCTGCGATCTTTGGCGGGAGAGATCG
+# GAGACCGCGTGCTAGTGTCTGTCTGAGAG</code></pre>
+<ul>
+<li>If we wanted to use these sequences in some other application we could write them to file:</li>
+</ul>
+<pre class="r"><code>write(all_recs, file = &quot;my_transcripts.fasta&quot;)</code></pre>
+</div>
+<div id="end-lesson-examples." class="section level1">
+<h1>End Lesson examples.</h1>
 <div id="where-to-learn-more" class="section level2">
 <h2>Where to learn more???</h2>
+<div id="fetch-a-parsed-xml-document" class="section level3">
+<h3>Fetch a parsed XML document</h3>
 </div>
-<div id="fetch-a-parsed-xml-document" class="section level2">
-<h2>Fetch a parsed XML document</h2>
-</div>
-<div id="using-ncbis-web-history-features" class="section level2">
-<h2>Using NCBI’s Web History features</h2>
+<div id="using-ncbis-web-history-features" class="section level3">
+<h3>Using NCBI’s Web History features</h3>
 <ul>
 <li>Most of this tutorial was based on the <a href="https://ropensci.org/tutorials/rentrez_tutorial.html">ROpenscience tutorial</a> on rentrez.</li>
 <li>I also used some of Ted Hart’s <a href="https://github.com/ropensci/workshops-scio14-2014-02">Rentrez demo</a> as part of SIO14.</li>
 </ul>
+</div>
 </div>
 </div>
 

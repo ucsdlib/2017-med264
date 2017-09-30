@@ -602,8 +602,7 @@ When downloading large sets of data, it is a good idea to take advantage of the
 arguments `retmax` and `restart` to split the request up into smaller chunks.
 For instance, we could get the first 200 sequences in 50-sequence chunks:
 
-(note: this code block is not executed as part of the vignette to save time and bandwidth):
-
+### (note: this code block is not executed as part of the vignette to save time and bandwidth):
 
 ```r
 for( seq_start in seq(1,200,50)){
@@ -613,6 +612,7 @@ for( seq_start in seq(1,200,50)){
     cat(seq_start+49, "sequences downloaded\r")
 }
 ```
+
 
 ##What next ?
 

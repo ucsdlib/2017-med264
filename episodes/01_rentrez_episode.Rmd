@@ -405,12 +405,58 @@ extract_from_esummary(multi_summs, "fulljournalname")
 ```
 
 * and several elements
+(using knitr package used for dynamic report generation to display output in R)
+```{r}
+date_and_cite <- extract_from_esummary(multi_summs, c("pubdate", "pmcrefcount", "title"))
+knitr::kable(head(t(date_and_cite)), row.names = FALSE)
+```
+
+## Fetching full records: `entrez_fetch()`
+
+* As useful as the summary records are, sometimes they just don’t have the information that you need. 
+
+* If you want a complete representation of a record you can use `entrez_fetch`, using the argument `rettype` to specify the format you’d like the record in.
+
+# Fetch DNA sequences in fasta format
+
+```{r}
+gene_ids <- c(351, 11647)
+linked_seq_ids <- entrez_link(dbfrom="gene", id=gene_ids, db="nuccore")
+linked_transcripts <- linked_seq_ids$links$gene_nuccore_refseqrna
+head(linked_transcripts)
+```
+
+Now we can get our sequences with `entrez_fetch`, setting `rettype` to `“fasta”` (the list of formats available for each database is give in this [table](https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/)):
+
+```{r}
+all_recs <- entrez_fetch(db="nuccore", id=linked_transcripts, rettype = "fasta")
+class(all_recs)
+```
+```{r}
+nchar(all_recs)
+```
+* We now have a really huge character vector! 
+* Rather than printing all those thousands of bases we can take a peak at the top of the file:
+
+```{r}
+cat(strwrap(substr(all_recs, 1, 500)), sep = "\n")
+```
+* If we wanted to use these sequences in some other application we could write them to file:
+
+```{r}
+write(all_recs, file = "my_transcripts.fasta")
+```
+
+
+
+# End Lesson examples. 
+
 
 
 ## Where to learn more???
 
-## Fetch a parsed XML document
-## Using NCBI's Web History features
+### Fetch a parsed XML document
+### Using NCBI's Web History features
 
 * Most of this tutorial was based on the [ROpenscience tutorial](https://ropensci.org/tutorials/rentrez_tutorial.html) on rentrez. 
 * I also used some of Ted Hart's [Rentrez demo](https://github.com/ropensci/workshops-scio14-2014-02) as part of SIO14. 
