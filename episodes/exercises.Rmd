@@ -1,7 +1,7 @@
 ---
-title: "Exercises"
-author: "Tim Dennis"
-date: "October 2, 2016"
+title: "Rentrez Search Exercises"
+author: "Reused from Tim Dennis MED264"
+date: "October 5, 2017"
 output: 
   html_document: 
     toc: yes
@@ -44,6 +44,7 @@ entrez_search(db   = "pubmed",
 
 Try different Mesh terms in pubmed. You can look up Mesh terms here <http://www.ncbi.nlm.nih.gov/mesh> or query the `Mesh` databse with the term: `entrez_search(db="mesh", term =...)`.
 
+<!--
 ##Answers
 
 ###1: DOI Search
@@ -77,3 +78,5 @@ entrez_search(db="sra",
 entrez_search(db   = "pubmed",
               term = "(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])")
 ```
+
+-->

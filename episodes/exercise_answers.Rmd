@@ -1,7 +1,7 @@
 ---
-title: "Exercises"
-author: "Tim Dennis"
-date: "October 2, 2016"
+title: "Rentrez Search Exercises"
+author: "Reused from Tim Dennis MED264"
+date: "October 5, 2017"
 output: 
   html_document: 
     toc: yes
@@ -11,7 +11,7 @@ output:
 library(rentrez)
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+<!--
 ## Excercises 
 ### 1: DOI Search
 
@@ -43,10 +43,10 @@ entrez_search(db   = "pubmed",
 ```
 
 Try different Mesh terms in pubmed. You can look up Mesh terms here <http://www.ncbi.nlm.nih.gov/mesh> or query the `Mesh` databse with the term: `entrez_search(db="mesh", term =...)`.
+-->
+## Exercise Answers
 
-##Answers
-
-###1: DOI Search
+### 1: DOI Search
 ```{r answer1}
 ex1_paper <- entrez_search(db="pubmed", term="10.1111/nyas.13259[doi]")
 ex1_summary <- entrez_summary(db="pubmed", ex1_paper$ids)
@@ -56,14 +56,16 @@ ex1_summary$source
 ex1_summary$pubdate
 ```
 
-###2. Keyword search
+
+
+### 2. Keyword search
 
 ```{r searchids_2, eval=FALSE}
 another_r_search <- entrez_search(db="pubmed", term="Natural Language Processing", retmax=40)
 another_r_search
 ```
 
-###3: Qualifiers: 
+### 3: Using Qualifiers: 
 
 ```{r, Tt3-qual}
 entrez_search(db="sra",
@@ -71,7 +73,7 @@ entrez_search(db="sra",
               retmax=0)
 ```
 
-###4: Mesh search
+### 4: Mesh search
 
 ```{r, mesh-ans}
 entrez_search(db   = "pubmed",
