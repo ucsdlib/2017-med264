@@ -125,20 +125,21 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#ncbi">NCBI</a></li>
-<li><a href="#rentrez">rentrez</a></li>
+<li><a href="#ncbi-intro">NCBI Intro</a></li>
+<li><a href="#rentrez-package">rentrez package</a></li>
 <li><a href="#rentrez-uses-the-eutils-api">rentrez Uses the EUtils API</a></li>
 <li><a href="#gettting-started-with-rentrez">Gettting started with rentrez</a><ul>
 <li><a href="#install">Install</a></li>
 </ul></li>
+<li><a href="#getting-started">Getting started</a></li>
 <li><a href="#a-simple-example-find-by-doi">A Simple Example: Find by DOI</a></li>
 <li><a href="#search-terms-entrez_search">Search Terms: <code>entrez_search()</code></a></li>
 <li><a href="#using-search-field-operators">Using search field operators</a></li>
 <li><a href="#precise-queries-using-mesh-terms">Precise queries using MeSH terms</a></li>
 <li><a href="#challenge-5min"><strong><a href="exercises.html">Challenge</a></strong> (5min)</a></li>
-<li><a href="#counting---use-teds-example">* <strong><a href="02_entrez_search.html">Counting - use Ted’s example</a></strong></a></li>
+<li><a href="#section-2---search-and-plot-trendy-topics-in-genetics-example">* <strong><a href="02_entrez_search.html">Section 2 - Search and plot trendy topics in genetics example</a></strong></a></li>
 <li><a href="#linking-docs-entrez_link">Linking docs: <code>entrez_link()</code></a></li>
-<li><a href="#original-lesson-ended-here---go-to-lesson-2-if-less-time">original lesson ended here - go to lesson 2 if less time</a><ul>
+<li><a href="#original-lesson-ended-here---go-to-lesson-2-to-show-plotting-if-less-time">original lesson ended here - go to lesson 2 to show plotting if less time</a><ul>
 <li><a href="#narrowing-our-focus">Narrowing our focus</a></li>
 <li><a href="#external-links">External links</a></li>
 <li><a href="#using-more-than-one-id">Using more than one ID</a></li>
@@ -149,10 +150,8 @@ $(document).ready(function () {
 </ul></li>
 <li><a href="#fetch-dna-sequences-in-fasta-format">Fetch DNA sequences in fasta format</a></li>
 <li><a href="#end-lesson-examples.">End Lesson examples.</a><ul>
-<li><a href="#where-to-learn-more">Where to learn more???</a><ul>
-<li><a href="#fetch-a-parsed-xml-document">Fetch a parsed XML document</a></li>
-<li><a href="#using-ncbis-web-history-features">Using NCBI’s Web History features</a></li>
-</ul></li>
+<li><a href="#topics-not-covered-in-this-lesson">Topics not covered in this lesson:</a></li>
+<li><a href="#where-to-learn-more">Where to learn more???</a></li>
 </ul></li>
 </ul>
 </div>
@@ -164,8 +163,8 @@ Go to:
 1. <https://b.socrative.com/login/student/>
 2. USE the room number: QTKGZXF6G
 -->
-<div id="ncbi" class="section level2">
-<h2>NCBI</h2>
+<div id="ncbi-intro" class="section level2">
+<h2>NCBI Intro</h2>
 <p>NCBI has a lot of data in it. As of today, it has:</p>
 <ul>
 <li>27.7 million papers in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>,</li>
@@ -175,8 +174,8 @@ Go to:
 </ul>
 <p>All records can be cross-referenced with the 1.3 million species in the <a href="www.ncbi.nlm.nih.gov/taxonomy">NCBI taxonomy</a> or 25.2 thousand disease-associated records in <a href="http://www.ncbi.nlm.nih.gov/omim">OMIM</a>.</p>
 </div>
-<div id="rentrez" class="section level2">
-<h2>rentrez</h2>
+<div id="rentrez-package" class="section level2">
+<h2>rentrez package</h2>
 <p><code>rentrez</code> provides functions that work with the <a href="http://www.ncbi.nlm.nih.gov/books/NBK25500/">NCBI Eutils</a> API to search, download data from, and otherwise interact with NCBI databases.</p>
 <pre class="r"><code>library(devtools)
 install_github(&quot;ropensci/rentrez&quot;)</code></pre>
@@ -193,13 +192,26 @@ install_github(&quot;ropensci/rentrez&quot;)</code></pre>
 <h2>Gettting started with rentrez</h2>
 <div id="install" class="section level3">
 <h3>Install</h3>
-<p>From the R Cran repository:</p>
+<ul>
+<li>Install from the R Cran repository:</li>
+</ul>
 <pre class="r"><code>install.packages('rentrez')</code></pre>
-<p>From the development branch:</p>
+<ul>
+<li>From the development branch on GitHub:</li>
+</ul>
 <pre class="r"><code>install_github(&quot;ropensci/rentrez&quot;)</code></pre>
-<p><code>library()</code> tells our R environment to load the package for use.</p>
+<ul>
+<li><code>library()</code> tells our R environment to load the package for use.</li>
+</ul>
 <pre class="r"><code>library(rentrez)</code></pre>
-<p>We can use <code>entrez_dbs</code> to get a list of the databases we can search.</p>
+</div>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<ul>
+<li>Let’s take a look at the available NCBI databases</li>
+<li>We can use <code>entrez_dbs</code> to get a list of the databases we can search.</li>
+</ul>
 <pre class="r"><code>entrez_dbs()</code></pre>
 <pre><code>#  [1] &quot;pubmed&quot;          &quot;protein&quot;         &quot;nuccore&quot;        
 #  [4] &quot;ipg&quot;             &quot;nucleotide&quot;      &quot;nucgss&quot;         
@@ -218,7 +230,7 @@ install_github(&quot;ropensci/rentrez&quot;)</code></pre>
 # [43] &quot;seqannot&quot;        &quot;snp&quot;             &quot;sra&quot;            
 # [46] &quot;taxonomy&quot;        &quot;biocollections&quot;  &quot;unigene&quot;        
 # [49] &quot;gencoll&quot;         &quot;gtr&quot;</code></pre>
-<p><strong>Functions that help you learn about NCBI databases</strong></p>
+<p><strong>Helper Functions that help you learn about NCBI databases</strong></p>
 <table>
 <colgroup>
 <col width="32%"></col>
@@ -245,16 +257,21 @@ install_github(&quot;ropensci/rentrez&quot;)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Let’s retrieve a description of on of the databases:</p>
+<ul>
+<li>Let’s retrieve a description of on of the databases:</li>
+</ul>
 <pre class="r"><code>entrez_db_summary('dbvar')</code></pre>
 <pre><code>#  DbName: dbvar
 #  MenuName: dbVar
 #  Description: dbVar records
 #  DbBuild: Build170930-2230.1
 #  Count: 6621056
-#  LastUpdate: 2017/10/01 01:30</code></pre>
+#  LastUpdate: 2017/10/01 01:32</code></pre>
 <pre class="r"><code>#entrez_db_summary('snp')</code></pre>
-<p>We can also use <code>entrez_db_searchable</code> to see what search fields and qualifiers are allowable:</p>
+<ul>
+<li>We can also use <code>entrez_db_searchable</code> to see what search fields and qualifiers are allowable</li>
+<li>For example, we can see what searchable fields (qualifiers) can be used with the Sequence Read Archive (SRA) database:</li>
+</ul>
 <pre class="r"><code>entrez_db_searchable(&quot;sra&quot;)</code></pre>
 <pre><code># Searchable fields for database 'sra'
 #   ALL      All terms from all searchable fields 
@@ -283,14 +300,11 @@ install_github(&quot;ropensci/rentrez&quot;)</code></pre>
 <li>Check out <a href="https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers" class="uri">https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers</a> for more information on the search term <strong>qualifiers</strong>.</li>
 </ul>
 </div>
-</div>
 <div id="a-simple-example-find-by-doi" class="section level2">
 <h2>A Simple Example: Find by DOI</h2>
 <p><strong>Use a DOI to return the PMID of an article using <code>entrez_search</code></strong></p>
 <p>Use an article DOI: <a href="http://dx.doi.org/10.1007/s10689-007-9171-7">Cancer risk reduction and reproductive concerns in female BRCA1/2 mutation carriers</a>. DOI of 10.1007/s10689-007-9171-7.</p>
-<pre class="r"><code>library(rentrez)
-#wcancer_paper &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;10.1007/s10689-007-9171-7[doi]&quot;)
-wcancer_paper &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;10.1002/ijc.21536[doi]&quot;)
+<pre class="r"><code>wcancer_paper &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;10.1002/ijc.21536[doi]&quot;)
 
 wcancer_paper$ids</code></pre>
 <pre><code># [1] &quot;16331614&quot;</code></pre>
@@ -360,28 +374,34 @@ another_r_search</code></pre>
 </div>
 <div id="using-search-field-operators" class="section level2">
 <h2>Using search field operators</h2>
-<p>NCBI has search field operators that we can add to queries <code>query[field]</code>.</p>
 <ul>
-<li>For instance, we can find next generation sequence datasets for the (amazing…) ciliate <em>Tetrahymena thermophila</em> by using the organism (‘ORGN’) search field:</li>
+<li><p>NCBI has search field operators that we can add to queries <code>query[search field]</code>.</p></li>
+<li><p>For instance, we can find next generation sequence datasets for the (amazing…) ciliate <em>Tetrahymena thermophila</em> by using the organism (‘ORGN’) search field:</p></li>
 </ul>
 <pre class="r"><code>entrez_search(db=&quot;sra&quot;,
               term=&quot;Tetrahymena thermophila[ORGN]&quot;,
               retmax=0)</code></pre>
 <pre><code># Entrez search result with 253 hits (object contains 0 IDs and no web_history object)
 #  Search term (as translated):  &quot;Tetrahymena thermophila&quot;[Organism]</code></pre>
-<p>We can narrow our focus to only those records that have been added recently (using the colon to specify a range of values):</p>
+<ul>
+<li>We can narrow our focus to only those records that have been added recently (using the colon to specify a range of values):</li>
+</ul>
 <pre class="r"><code>entrez_search(db=&quot;sra&quot;,
               term=&quot;Tetrahymena thermophila[ORGN] AND 2013:2015[PDAT]&quot;,
               retmax=0)</code></pre>
 <pre><code># Entrez search result with 75 hits (object contains 0 IDs and no web_history object)
 #  Search term (as translated):  &quot;Tetrahymena thermophila&quot;[Organism] AND 2013[PDAT] ...</code></pre>
-<p>Or include recent records for either <em>T. thermophila</em> or it’s close relative <em>T. borealis</em> (using parentheses to make ANDs and ORs explicit).</p>
+<ul>
+<li>Or include recent records for either <em>T. thermophila</em> or it’s close relative <em>T. borealis</em> (using parentheses to make ANDs and ORs explicit).</li>
+</ul>
 <pre class="r"><code>entrez_search(db=&quot;sra&quot;,
               term=&quot;(Tetrahymena thermophila[ORGN] OR Tetrahymena borealis[ORGN]) AND 2013:2015[PDAT]&quot;,
               retmax=0)</code></pre>
 <pre><code># Entrez search result with 75 hits (object contains 0 IDs and no web_history object)
 #  Search term (as translated):  (&quot;Tetrahymena thermophila&quot;[Organism] OR &quot;Tetrahyme ...</code></pre>
-<p>The set of search terms available varies between databases. You can get a list of available terms or any given data base with <code>entrez_db_searchable()</code></p>
+<ul>
+<li>The set of search terms available varies between databases. You can get a list of available terms or any given data base with <code>entrez_db_searchable()</code></li>
+</ul>
 <pre class="r"><code>entrez_db_searchable(&quot;sra&quot;)</code></pre>
 <pre><code># Searchable fields for database 'sra'
 #   ALL      All terms from all searchable fields 
@@ -427,16 +447,19 @@ another_r_search</code></pre>
 <div id="challenge-5min" class="section level2">
 <h2><strong><a href="exercises.html">Challenge</a></strong> (5min)</h2>
 </div>
-<div id="counting---use-teds-example" class="section level2">
-<h2>* <strong><a href="02_entrez_search.html">Counting - use Ted’s example</a></strong></h2>
+<div id="section-2---search-and-plot-trendy-topics-in-genetics-example" class="section level2">
+<h2>* <strong><a href="02_entrez_search.html">Section 2 - Search and plot trendy topics in genetics example</a></strong></h2>
 </div>
 <div id="linking-docs-entrez_link" class="section level2">
 <h2>Linking docs: <code>entrez_link()</code></h2>
 <ul>
-<li>One of the strengths of the NCBI databases is that records of one type are connected to other records within the NCBI or to external data sources *<code>entrez_link()</code> allows users to discover these links between records.</li>
-<li>Let’s find all NCBI data associated with a single gene (in this case the Amyloid Beta Precursor gene, the product of which is associated with the plaques that form in the brains of Alzheimer’s Disease patients).</li>
-<li>we need to provide an ID (<code>id</code>), the database from which this ID comes (<code>dbfrom</code>) and the name of a database in which to find linked records (<code>db</code>)</li>
-<li>If we set this last argument to ‘all’ we can find links in multiple databases:</li>
+<li>One of the strengths of the NCBI databases is that records of one type are connected to other records within the NCBI or to external data sources</li>
+</ul>
+<p>*<code>entrez_link()</code> allows users to discover these links between records.</p>
+<ul>
+<li><p>Let’s find all NCBI data associated with a single gene (in this case the Amyloid Beta Precursor gene, the product of which is associated with the plaques that form in the brains of Alzheimer’s Disease patients).</p></li>
+<li><p>we need to provide an ID (<code>id</code>), the database from which this ID comes (<code>dbfrom</code>) and the name of a database in which to find linked records (<code>db</code>)</p></li>
+<li><p>If we set this last argument to ‘all’ we can find links in multiple databases:</p></li>
 </ul>
 <pre class="r"><code>all_the_links &lt;- entrez_link(dbfrom='gene', id=351, db='all')
 all_the_links</code></pre>
@@ -482,7 +505,9 @@ all_the_links</code></pre>
 <pre class="r"><code>all_the_links$links$gene_pmc[1:10]</code></pre>
 <pre><code>#  [1] &quot;5561919&quot; &quot;5560349&quot; &quot;5559291&quot; &quot;5548265&quot; &quot;5540602&quot; &quot;5434815&quot; &quot;5395029&quot;
 #  [8] &quot;5360245&quot; &quot;5233555&quot; &quot;5104494&quot;</code></pre>
-<p>Or if were interested in this gene’s role in diseases we could find links to clinVar:</p>
+<ul>
+<li>Or if were interested in this gene’s role in diseases we could find links to clinVar:</li>
+</ul>
 <pre class="r"><code>all_the_links$links$gene_clinvar</code></pre>
 <pre><code>#   [1] &quot;397432&quot; &quot;396808&quot; &quot;396332&quot; &quot;396150&quot; &quot;394309&quot; &quot;391496&quot; &quot;369359&quot;
 #   [8] &quot;339659&quot; &quot;339658&quot; &quot;339657&quot; &quot;339656&quot; &quot;339655&quot; &quot;339654&quot; &quot;339653&quot;
@@ -503,8 +528,8 @@ all_the_links</code></pre>
 # [113] &quot;18097&quot;  &quot;18096&quot;  &quot;18095&quot;  &quot;18094&quot;  &quot;18093&quot;  &quot;18092&quot;  &quot;18091&quot; 
 # [120] &quot;18090&quot;  &quot;18089&quot;  &quot;18088&quot;  &quot;18087&quot;</code></pre>
 </div>
-<div id="original-lesson-ended-here---go-to-lesson-2-if-less-time" class="section level1">
-<h1>original lesson ended here - go to lesson 2 if less time</h1>
+<div id="original-lesson-ended-here---go-to-lesson-2-to-show-plotting-if-less-time" class="section level1">
+<h1>original lesson ended here - go to lesson 2 to show plotting if less time</h1>
 <div id="narrowing-our-focus" class="section level2">
 <h2>Narrowing our focus</h2>
 <ul>
@@ -521,22 +546,30 @@ nuc_links</code></pre>
 <pre><code># elink result with information from 5 databases:
 # [1] gene_nuccore            gene_nuccore_mgc        gene_nuccore_pos       
 # [4] gene_nuccore_refseqgene gene_nuccore_refseqrna</code></pre>
-<p>The object we get back contains links to the nucleotide database generally, but also to special subsets of that database like <code>refseq</code>.</p>
-<p>We can take advantage of this narrower set of links to find IDs that match unique transcripts from our gene of interest.</p>
+<ul>
+<li><p>The object we get back contains links to the nucleotide database generally, but also to special subsets of that database like <code>refseq</code>.</p></li>
+<li><p>We can take advantage of this narrower set of links to find IDs that match unique transcripts from our gene of interest.</p></li>
+</ul>
 <pre class="r"><code>nuc_links$links$gene_nuccore_refseqrna</code></pre>
 <pre><code>#  [1] &quot;324021747&quot; &quot;324021746&quot; &quot;324021739&quot; &quot;324021737&quot; &quot;324021735&quot;
 #  [6] &quot;228008405&quot; &quot;228008404&quot; &quot;228008403&quot; &quot;228008402&quot; &quot;228008401&quot;</code></pre>
-<p>We can use these ids in calls to <code>entrez_fetch()</code> or <code>entrez_summary()</code> to learn more about the transcripts they represent.</p>
+<ul>
+<li>We can use these ids in calls to <code>entrez_fetch()</code> or <code>entrez_summary()</code> to learn more about the transcripts they represent.</li>
+</ul>
 </div>
 <div id="external-links" class="section level2">
 <h2>External links</h2>
-<p>In addition to finding data within the NCBI, <code>entrez_link</code> can turn up connections to external databases. Perhaps the most interesting example is finding links to the full text of papers in PubMed.</p>
-<p>For example, when I wrote this document the first paper linked to <code>Amyloid Beta Precursor</code> had a unique ID of <code>25500142</code>. We can find links to the full text of that paper with <code>entrez_link</code> by setting the cmd argument to <code>‘llinks’</code>:</p>
+<ul>
+<li><p>In addition to finding data within the NCBI, <code>entrez_link</code> can turn up connections to external databases. Perhaps the most interesting example is finding links to the full text of papers in PubMed.</p></li>
+<li><p>For example, when I wrote this document the first paper linked to <code>Amyloid Beta Precursor</code> had a unique ID of <code>25500142</code>. We can find links to the full text of that paper with <code>entrez_link</code> by setting the cmd argument to <code>‘llinks’</code>:</p></li>
+</ul>
 <pre class="r"><code>paper_links &lt;- entrez_link(dbfrom=&quot;pubmed&quot;, id=25500142, cmd=&quot;llinks&quot;)
 paper_links</code></pre>
 <pre><code># elink object with contents:
 #  $linkouts: links to external websites</code></pre>
-<p>Each element of the <code>linkouts</code> object contains information about an external source of data on this paper:</p>
+<ul>
+<li>Each element of the <code>linkouts</code> object contains information about an external source of data on this paper:</li>
+</ul>
 <pre class="r"><code>paper_links$linkouts</code></pre>
 <pre><code># $ID_25500142
 # $ID_25500142[[1]]
@@ -579,14 +612,18 @@ paper_links</code></pre>
 # [5] &quot;http://pubmedcentralcanada.ca/pmcc/articles/pmid/25500142&quot;              
 # [6] &quot;https://medlineplus.gov/alzheimersdisease.html&quot;                         
 # [7] &quot;http://www.informatics.jax.org/reference/25500142&quot;</code></pre>
-<p>The full list of options for the cmd argument are given in in-line documentation <code>(?entrez_link)</code>.</p>
-<p>If you are interested in finding full text records for a large number of articles checkout the package <a href="https://github.com/ropensci/fulltext">fulltext</a> which makes use of multiple sources (including the NCBI) to discover the <code>full text</code> articles.</p>
+<ul>
+<li><p>The full list of options for the cmd argument are given in in-line documentation <code>(?entrez_link)</code>.</p></li>
+<li><p>If you are interested in finding full text records for a large number of articles checkout the package <a href="https://github.com/ropensci/fulltext">fulltext</a> which makes use of multiple sources (including the NCBI) to discover the <code>full text</code> articles.</p></li>
+</ul>
 </div>
 <div id="using-more-than-one-id" class="section level2">
 <h2>Using more than one ID</h2>
-<p>It is possible to pass more than one ID to <code>entrez_link()</code>.</p>
-<p>By default, doing so will give you a single elink object containing the complete set of links for all of the IDs that you specified.</p>
-<p>So, if you were looking for protein IDs related to specific genes you could do:</p>
+<ul>
+<li><p>It is possible to pass more than one ID to <code>entrez_link()</code>.</p></li>
+<li><p>By default, doing so will give you a single elink object containing the complete set of links for all of the IDs that you specified.</p></li>
+<li><p>So, if you were looking for protein IDs related to specific genes you could do:</p></li>
+</ul>
 <pre class="r"><code>all_links_together &lt;- entrez_link(db=&quot;protein&quot;, dbfrom=&quot;gene&quot;, id=c(&quot;93100&quot;, &quot;223646&quot;))
 all_links_together</code></pre>
 <pre><code># elink object with contents:
@@ -633,9 +670,9 @@ all_links_sep</code></pre>
 <div id="the-summary-record" class="section level2">
 <h2>The summary record</h2>
 <ul>
-<li><code>entrez_summary()</code> takes a vector of unique IDs for the samples you want to get summary information from.</li>
+<li><p><code>entrez_summary()</code> takes a vector of unique IDs for the samples you want to get summary information from.</p></li>
+<li><p>Let’s start by finding out something about the paper describing <code>[Taxize](https://github.com/ropensci/taxize)</code>, using its PubMed ID:</p></li>
 </ul>
-<p>Let’s start by finding out something about the paper describing <code>[Taxize](https://github.com/ropensci/taxize)</code>, using its PubMed ID:</p>
 <pre class="r"><code>taxize_summ &lt;- entrez_summary(db=&quot;pubmed&quot;, id=24555091)
 taxize_summ</code></pre>
 <pre><code># esummary result with 42 items:
@@ -774,15 +811,17 @@ linked_transcripts &lt;- linked_seq_ids$links$gene_nuccore_refseqrna
 head(linked_transcripts)</code></pre>
 <pre><code># [1] &quot;1039766414&quot; &quot;1039766413&quot; &quot;1039766411&quot; &quot;1039766410&quot; &quot;1039766409&quot;
 # [6] &quot;563317856&quot;</code></pre>
-<p>Now we can get our sequences with <code>entrez_fetch</code>, setting <code>rettype</code> to <code>“fasta”</code> (the list of formats available for each database is give in this <a href="https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/">table</a>):</p>
+<ul>
+<li>Now we can get our sequences with <code>entrez_fetch</code>, setting <code>rettype</code> to <code>“fasta”</code> (the list of formats available for each database is give in this <a href="https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/">table</a>):</li>
+</ul>
 <pre class="r"><code>all_recs &lt;- entrez_fetch(db=&quot;nuccore&quot;, id=linked_transcripts, rettype = &quot;fasta&quot;)
 class(all_recs)</code></pre>
 <pre><code># [1] &quot;character&quot;</code></pre>
 <pre class="r"><code>nchar(all_recs)</code></pre>
 <pre><code># [1] 55183</code></pre>
 <ul>
-<li>We now have a really huge character vector!</li>
-<li>Rather than printing all those thousands of bases we can take a peak at the top of the file:</li>
+<li><p>We now have a really huge character vector!</p></li>
+<li><p>Rather than printing all those thousands of bases we can take a peak at the top of the file:</p></li>
 </ul>
 <pre class="r"><code>cat(strwrap(substr(all_recs, 1, 500)), sep = &quot;\n&quot;)</code></pre>
 <pre><code># &gt;XM_006538500.2 PREDICTED: Mus musculus alkaline phosphatase,
@@ -797,21 +836,25 @@ class(all_recs)</code></pre>
 <li>If we wanted to use these sequences in some other application we could write them to file:</li>
 </ul>
 <pre class="r"><code>write(all_recs, file = &quot;my_transcripts.fasta&quot;)</code></pre>
+<ul>
+<li>file will be saved in your current RStudio working directory</li>
+</ul>
 </div>
 <div id="end-lesson-examples." class="section level1">
 <h1>End Lesson examples.</h1>
+<div id="topics-not-covered-in-this-lesson" class="section level3">
+<h3>Topics not covered in this lesson:</h3>
+<ul>
+<li>Fetch a parsed XML document</li>
+<li>Using NCBI’s Web History features</li>
+</ul>
+</div>
 <div id="where-to-learn-more" class="section level2">
 <h2>Where to learn more???</h2>
-<div id="fetch-a-parsed-xml-document" class="section level3">
-<h3>Fetch a parsed XML document</h3>
-</div>
-<div id="using-ncbis-web-history-features" class="section level3">
-<h3>Using NCBI’s Web History features</h3>
 <ul>
 <li>Most of this tutorial was based on the <a href="https://ropensci.org/tutorials/rentrez_tutorial.html">ROpenscience tutorial</a> on rentrez.</li>
 <li>I also used some of Ted Hart’s <a href="https://github.com/ropensci/workshops-scio14-2014-02">Rentrez demo</a> as part of SIO14.</li>
 </ul>
-</div>
 </div>
 </div>
 

@@ -29,7 +29,7 @@ It can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).
 You will need the Desktop version for your computer.
 
 
-## Getting a headstart
+## Getting a head start
 
 If you are new to R and RStudio, you can familiarize yourself with some of the basic syntax and structure of R, take the free online R course from datacamp.com: https://www.datacamp.com/. You can also learn R from within R with a tutorial called [Swirl](http://swirlstats.com/). Follow the instructions here  [http://swirlstats.com/students.html](http://swirlstats.com/students.html).
 
