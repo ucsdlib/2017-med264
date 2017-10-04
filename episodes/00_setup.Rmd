@@ -51,6 +51,6 @@ This lesson will be focusing on the National Center for Biotechnology Informatio
 * [Intro to R](r-intro.html)
 * [Dataframes & Subsetting](data-frame-subsetting.html) -->
 
-* [Lecture notes- Entrez](1_rentrez_episode.html)
-* [Lecture notes - Counting *onmics](2_entrez_search.html)
+* [Lecture notes- Rentrez](01_rentrez_episode.html)
+* [Lecture notes - Counting *onmics search example](02_entrez_search.html)
 

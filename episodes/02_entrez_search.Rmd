@@ -35,9 +35,9 @@ Let's start by searching for terms with rmetadata from the crossref database.
 options(stringsAsFactors=F)
 #library(rcrossref)
 #library(rmetadata)
-library(rentrez)
-library(reshape2)
-library(ggplot2)
+# library(rentrez)
+# library(reshape2)
+# library(ggplot2)
 #toxo <- crossref_search(q = "toxoplasmosis")
 
 ## We can also extend these to search by year, and change the number of records we have
@@ -60,18 +60,20 @@ library(ggplot2)
 
 ```
 
-## Trendy topics in genetics
+## Search for Trendy topics in genetics example
 * We can also search pubmed abstracts with the [`rentrez`](https://github.com/ropensci/rentrez) package
 
 * you can also use entrez to search pubmed and the EUtils API allows you to limit searches by the year in which the paper was published. 
 
-* That gives is a chance to find the trendiest -omics going around (this has quite a lot of repeated searching, so it you want to run your own version be sure to do it in off peak times).
+* For example we can find the trendiest -omics going around (this has quite a lot of repeated searching, so you want to run your own version be sure to do it in off peak times).
 
-Let's start by making a function that finds the number of records matching a given search term for each of several years (using the mindate and maxdate terms from the Eutils API):
+* Let's start by making a function that finds the number of records matching a given search term for each of several years (using the mindate and maxdate terms from the Eutils API):
 
 ### create a function
 ```{r}
-#library(rentrez)
+library(rentrez)
+library(reshape2)
+library(ggplot2)
 papers_by_year <- function(years, search_term){
   return(sapply(years, function(y) entrez_search(db="pubmed", term = search_term, mindate=y, maxdate=y, retmax=0)$count))
 }
@@ -87,7 +89,7 @@ trend_data <- sapply(omics, function(t) papers_by_year(years, t))
 trend_props <- trend_data/total_papers
 ```
 
-* That's the date, ready for plot:
+* That's the data, ready for plot:
 
 ```{r}
 trend_df <- melt(data.frame(years, trend_props), id.vars="years")
@@ -100,8 +102,9 @@ p + geom_line(size=1) + scale_y_log10("number of papers")
 ### full code
 ```{r}
 dmagna <- entrez_search(db="pubmed",term="Daphnia magna", retmax=1000)
+```
 
-
+```{r}
 papers_by_year <- function(years, search_term){
             return(sapply(years, function(y) entrez_search(db="pubmed",term=search_term, mindate=y, maxdate=y, retmax=0)$count))
         }
