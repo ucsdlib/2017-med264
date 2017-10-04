@@ -61,10 +61,10 @@ This lesson will be focusing on the National Center for Biotechnology Informatio
 * [Dataframes & Subsetting](data-frame-subsetting.html)
 -->
 
-## Rentrez & Data Vis Lessons
+## Rentrez Lesson
 
-* [Lecture notes- Entrez](episodes/01_rentrez_episode.html)
-* [Lecture notes - Counting *onmics](episodes/02_entrez_search.html)
+* [Lecture notes- Entrez](episodes/01_rentrez_episode.Rmd)
+* [Lecture notes - Counting *onmics](episodes/02_entrez_search.Rmd)
 * Examples adapted from the GitHub rentrez tutorial <https://github.com/ropensci/rentrez>
 * Check out the other packages provided by [ROpenscience](http://ropensci.org/)
 
