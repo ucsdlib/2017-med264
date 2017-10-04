@@ -134,7 +134,7 @@ wcan_summary$title
 wcan_summary$authors
 ```
 
-# **[Challenge](exercises.html)** (5min)
+
 
 ## Search Terms:  `entrez_search()`
 
@@ -227,7 +227,11 @@ entrez_search(db   = "pubmed",
 * You can download detailed information about each term and findthe ways in which terms relate to each other using `rentrez`. 
 * Search specific terms with `entrez_search(db="mesh", term =...)` and learn about the results of your search using the tools described below.
 
-* **[Counting - use Ted's example](2_entrez_search.html)**
+
+## **[Challenge](exercises.html)** (5min) 
+
+
+## * **[Counting - use Ted's example](02_entrez_search.html)**
 
 ## Linking docs: `entrez_link()`
 

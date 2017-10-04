@@ -11,7 +11,7 @@
 
 <meta name="author" content="Reid Otsuji adpted from Tim Dennis MED264" />
 
-<meta name="date" content="2017-09-29" />
+<meta name="date" content="2017-10-04" />
 
 <title>MED264: Rentrez Tutorial</title>
 
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">MED264: Rentrez Tutorial</h1>
 <h4 class="author"><em>Reid Otsuji adpted from Tim Dennis MED264</em></h4>
-<h4 class="date"><em>2017-09-29</em></h4>
+<h4 class="date"><em>2017-10-04</em></h4>
 
 </div>
 
@@ -132,12 +132,12 @@ $(document).ready(function () {
 <li><a href="#install">Install</a></li>
 </ul></li>
 <li><a href="#a-simple-example-find-by-doi">A Simple Example: Find by DOI</a></li>
-<li><a href="#challenge-5min"><strong><a href="exercises.html">Challenge</a></strong> (5min)</a><ul>
 <li><a href="#search-terms-entrez_search">Search Terms: <code>entrez_search()</code></a></li>
 <li><a href="#using-search-field-operators">Using search field operators</a></li>
 <li><a href="#precise-queries-using-mesh-terms">Precise queries using MeSH terms</a></li>
+<li><a href="#challenge-5min"><strong><a href="exercises.html">Challenge</a></strong> (5min)</a></li>
+<li><a href="#counting---use-teds-example">* <strong><a href="02_entrez_search.html">Counting - use Ted’s example</a></strong></a></li>
 <li><a href="#linking-docs-entrez_link">Linking docs: <code>entrez_link()</code></a></li>
-</ul></li>
 <li><a href="#original-lesson-ended-here---go-to-lesson-2-if-less-time">original lesson ended here - go to lesson 2 if less time</a><ul>
 <li><a href="#narrowing-our-focus">Narrowing our focus</a></li>
 <li><a href="#external-links">External links</a></li>
@@ -168,9 +168,9 @@ Go to:
 <h2>NCBI</h2>
 <p>NCBI has a lot of data in it. As of today, it has:</p>
 <ul>
-<li>27.6 million papers in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>,</li>
-<li>includes 4.6 million full-text records available in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed Central</a></li>
-<li><a href="http://www.ncbi.nlm.nih.gov/nuccore">The NCBI Nucleotide Database</a> (which includes GenBank) has data for 245.2 million different sequences</li>
+<li>27.7 million papers in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>,</li>
+<li>includes 4.7 million full-text records available in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed Central</a></li>
+<li><a href="http://www.ncbi.nlm.nih.gov/nuccore">The NCBI Nucleotide Database</a> (which includes GenBank) has data for 245.4 million different sequences</li>
 <li><a href="http://www.ncbi.nlm.nih.gov/snp/">dbSNP</a> describes 1070.2 million different genetic variants</li>
 </ul>
 <p>All records can be cross-referenced with the 1.3 million species in the <a href="www.ncbi.nlm.nih.gov/taxonomy">NCBI taxonomy</a> or 25.2 thousand disease-associated records in <a href="http://www.ncbi.nlm.nih.gov/omim">OMIM</a>.</p>
@@ -250,9 +250,9 @@ install_github(&quot;ropensci/rentrez&quot;)</code></pre>
 <pre><code>#  DbName: dbvar
 #  MenuName: dbVar
 #  Description: dbVar records
-#  DbBuild: Build170923-2210.1
+#  DbBuild: Build170930-2230.1
 #  Count: 6621056
-#  LastUpdate: 2017/09/24 01:56</code></pre>
+#  LastUpdate: 2017/10/01 01:30</code></pre>
 <pre class="r"><code>#entrez_db_summary('snp')</code></pre>
 <p>We can also use <code>entrez_db_searchable</code> to see what search fields and qualifiers are allowable:</p>
 <pre class="r"><code>entrez_db_searchable(&quot;sra&quot;)</code></pre>
@@ -322,8 +322,6 @@ wcan_summary$title</code></pre>
 # 20                                       Narod SA         Author          
 # 21 Hereditary Breast Cancer Clinical Study Group. CollectiveName</code></pre>
 </div>
-<div id="challenge-5min" class="section level1">
-<h1><strong><a href="exercises.html">Challenge</a></strong> (5min)</h1>
 <div id="search-terms-entrez_search" class="section level2">
 <h2>Search Terms: <code>entrez_search()</code></h2>
 <ul>
@@ -336,7 +334,7 @@ wcan_summary$title</code></pre>
 <li>The object returned by a search acts like a <code>list</code>, and you can get a summary of its contents by printing it.</li>
 </ul>
 <pre class="r"><code>r_search</code></pre>
-<pre><code># Entrez search result with 4806 hits (object contains 20 IDs and no web_history object)
+<pre><code># Entrez search result with 4810 hits (object contains 20 IDs and no web_history object)
 #  Search term (as translated):  &quot;natural language processing&quot;[MeSH Terms] OR (&quot;nat ...</code></pre>
 <ul>
 <li>NCBI’s server has worked out that we meant NPL, and so included the <a href="http://www.ncbi.nlm.nih.gov/mesh">‘MeSH’ term</a></li>
@@ -345,16 +343,16 @@ wcan_summary$title</code></pre>
 <li>We access the IDs as a vector using the <code>$</code> operator:</li>
 </ul>
 <pre class="r"><code>r_search$ids</code></pre>
-<pre><code>#  [1] &quot;28954419&quot; &quot;28952936&quot; &quot;28950906&quot; &quot;28945588&quot; &quot;28940969&quot; &quot;28938912&quot;
-#  [7] &quot;28936186&quot; &quot;28935617&quot; &quot;28933506&quot; &quot;28932767&quot; &quot;28924815&quot; &quot;28924564&quot;
-# [13] &quot;28919830&quot; &quot;28916254&quot; &quot;28906424&quot; &quot;28905434&quot; &quot;28899847&quot; &quot;28898194&quot;
-# [19] &quot;28895943&quot; &quot;28893314&quot;</code></pre>
+<pre><code>#  [1] &quot;28971429&quot; &quot;28967001&quot; &quot;28964503&quot; &quot;28962645&quot; &quot;28954419&quot; &quot;28952936&quot;
+#  [7] &quot;28950906&quot; &quot;28945588&quot; &quot;28940969&quot; &quot;28938912&quot; &quot;28936186&quot; &quot;28935617&quot;
+# [13] &quot;28933506&quot; &quot;28932767&quot; &quot;28924815&quot; &quot;28924564&quot; &quot;28919830&quot; &quot;28916254&quot;
+# [19] &quot;28906424&quot; &quot;28905434&quot;</code></pre>
 <ul>
 <li>let’s set the retmax up to retrieve more ids</li>
 </ul>
 <pre class="r"><code>another_r_search &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;Natural Language Processing&quot;, retmax=40)
 another_r_search</code></pre>
-<pre><code># Entrez search result with 4806 hits (object contains 40 IDs and no web_history object)
+<pre><code># Entrez search result with 4810 hits (object contains 40 IDs and no web_history object)
 #  Search term (as translated):  &quot;natural language processing&quot;[MeSH Terms] OR (&quot;nat ...</code></pre>
 <ul>
 <li>If we want to get IDs for all of the thousands of records that match this search, we can use the NCBI’s web history feature.</li>
@@ -423,9 +421,14 @@ another_r_search</code></pre>
 <ul>
 <li>MeSH terms are available as a database from the NCBI</li>
 <li>You can download detailed information about each term and findthe ways in which terms relate to each other using <code>rentrez</code>.</li>
-<li><p>Search specific terms with <code>entrez_search(db=&quot;mesh&quot;, term =...)</code> and learn about the results of your search using the tools described below.</p></li>
-<li><p><strong><a href="2_entrez_search.html">Counting - use Ted’s example</a></strong></p></li>
+<li>Search specific terms with <code>entrez_search(db=&quot;mesh&quot;, term =...)</code> and learn about the results of your search using the tools described below.</li>
 </ul>
+</div>
+<div id="challenge-5min" class="section level2">
+<h2><strong><a href="exercises.html">Challenge</a></strong> (5min)</h2>
+</div>
+<div id="counting---use-teds-example" class="section level2">
+<h2>* <strong><a href="02_entrez_search.html">Counting - use Ted’s example</a></strong></h2>
 </div>
 <div id="linking-docs-entrez_link" class="section level2">
 <h2>Linking docs: <code>entrez_link()</code></h2>
@@ -499,7 +502,6 @@ all_the_links</code></pre>
 # [106] &quot;18104&quot;  &quot;18103&quot;  &quot;18102&quot;  &quot;18101&quot;  &quot;18100&quot;  &quot;18099&quot;  &quot;18098&quot; 
 # [113] &quot;18097&quot;  &quot;18096&quot;  &quot;18095&quot;  &quot;18094&quot;  &quot;18093&quot;  &quot;18092&quot;  &quot;18091&quot; 
 # [120] &quot;18090&quot;  &quot;18089&quot;  &quot;18088&quot;  &quot;18087&quot;</code></pre>
-</div>
 </div>
 <div id="original-lesson-ended-here---go-to-lesson-2-if-less-time" class="section level1">
 <h1>original lesson ended here - go to lesson 2 if less time</h1>
@@ -669,7 +671,7 @@ taxize_summ</code></pre>
 <li>…or see how many times the article has been cited in PubMed Central papers</li>
 </ul>
 <pre class="r"><code>taxize_summ$pmcrefcount</code></pre>
-<pre><code># [1] 12</code></pre>
+<pre><code># [1] 13</code></pre>
 </div>
 <div id="dealing-with-many-records" class="section level2">
 <h2>Dealing with many records</h2>
