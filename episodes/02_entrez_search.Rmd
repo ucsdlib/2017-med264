@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * Taken from Ted Hart's workshop on ROpenscience at SIO14 
 
+<!--
 Searching metadata
 ========================================================
 
@@ -59,8 +60,9 @@ options(stringsAsFactors=F)
 # 
 
 ```
+-->
 
-## Search for Trendy topics in genetics example
+## Search and plot trendy topics in genetics example
 * We can also search pubmed abstracts with the [`rentrez`](https://github.com/ropensci/rentrez) package
 
 * you can also use entrez to search pubmed and the EUtils API allows you to limit searches by the year in which the paper was published. 
@@ -69,11 +71,15 @@ options(stringsAsFactors=F)
 
 * Let's start by making a function that finds the number of records matching a given search term for each of several years (using the mindate and maxdate terms from the Eutils API):
 
-### create a function
+### Load packages in RStudio 
 ```{r}
 library(rentrez)
 library(reshape2)
 library(ggplot2)
+```
+
+### Create a function
+```{r}
 papers_by_year <- function(years, search_term){
   return(sapply(years, function(y) entrez_search(db="pubmed", term = search_term, mindate=y, maxdate=y, retmax=0)$count))
 }
@@ -99,10 +105,12 @@ p + geom_line(size=1) + scale_y_log10("number of papers")
 
 
 
-### full code
+### Full code
+<!--
 ```{r}
 dmagna <- entrez_search(db="pubmed",term="Daphnia magna", retmax=1000)
 ```
+-->
 
 ```{r}
 papers_by_year <- function(years, search_term){
@@ -117,11 +125,9 @@ trend_props <- data.frame(trend_data/total_papers)
 trend_props$years <- years
 
 trend_df <- melt(as.data.frame(trend_props), id.vars="years")
-p <- ggplot(trend_df, aes(years, value, colour=variable))
+p <- ggplot(trend_df, aes(years, value, colour=variable)) 
 p + geom_line(size=1) + scale_y_log10("number of papers")
 
 
 ```
-
-
 
