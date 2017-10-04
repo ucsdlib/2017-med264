@@ -1,5 +1,5 @@
 ---
-title: "rentrez Searching Metadata"
+title: "rentrez Searching and Plotting"
 date: "10/5/2017"
 output: html_document
 ---
@@ -8,7 +8,29 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-* Taken from Ted Hart's workshop on ROpenscience at SIO14 
+## Creating a plot using only `entrez_search()` 
+
+* Using entrez_search() includes the number of records matching a given search. 
+
+* This means you can learn a little about the composition of, or trends in, the records stored in the NCBI’s databases using only the search utility.
+
+* For instance, let’s track the rise of the scientific buzzword “connectome” in PubMed, programmatically creating search terms for the PDAT field:
+
+```{r}
+library(rentrez)
+search_year <- function(year, term){
+    query <- paste(term, "AND (", year, "[PDAT])")
+    entrez_search(db="pubmed", term=query, retmax=0)$count
+}
+
+year <- 2008:2014
+papers <- sapply(year, search_year, term="Connectome", USE.NAMES=FALSE)
+
+plot(year, papers, type='b', main="The Rise of the Connectome")
+```
+
+
+* Next example taken from Ted Hart's workshop on ROpenscience at SIO14 
 
 <!--
 Searching metadata
