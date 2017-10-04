@@ -461,7 +461,7 @@ write(all_recs, file = "my_transcripts.fasta")
 * file will be saved in your current RStudio working directory
 
 # End Lesson examples. 
-
+* [exercise answers](exercise_answers.html)
 
 
 ### Topics not covered in this lesson:
@@ -471,3 +471,4 @@ write(all_recs, file = "my_transcripts.fasta")
 ## Where to learn more???
 * Most of this tutorial was based on the [ROpenscience tutorial](https://ropensci.org/tutorials/rentrez_tutorial.html) on rentrez. 
 * I also used some of Ted Hart's [Rentrez demo](https://github.com/ropensci/workshops-scio14-2014-02) as part of SIO14. 
+
