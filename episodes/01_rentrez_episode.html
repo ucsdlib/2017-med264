@@ -11,7 +11,7 @@
 
 <meta name="author" content="Reid Otsuji adpted from Tim Dennis MED264" />
 
-<meta name="date" content="2017-10-04" />
+<meta name="date" content="2017-10-05" />
 
 <title>MED264: Rentrez Tutorial</title>
 
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">MED264: Rentrez Tutorial</h1>
 <h4 class="author"><em>Reid Otsuji adpted from Tim Dennis MED264</em></h4>
-<h4 class="date"><em>2017-10-04</em></h4>
+<h4 class="date"><em>2017-10-05</em></h4>
 
 </div>
 
@@ -132,8 +132,8 @@ $(document).ready(function () {
 <li><a href="#install">Install</a></li>
 </ul></li>
 <li><a href="#getting-started">Getting started</a></li>
-<li><a href="#a-simple-example-find-by-doi">A Simple Example: Find by DOI</a></li>
 <li><a href="#search-terms-entrez_search">Search Terms: <code>entrez_search()</code></a></li>
+<li><a href="#a-simple-example-find-by-doi-using-entrez_search">A Simple Example: Find by DOI using <code>entrez_search()</code></a></li>
 <li><a href="#using-search-field-operators">Using search field operators</a></li>
 <li><a href="#precise-queries-using-mesh-terms">Precise queries using MeSH terms</a></li>
 <li><a href="#challenge-5min"><strong><a href="exercises.html">Challenge</a></strong> (5min)</a></li>
@@ -169,7 +169,7 @@ Go to:
 <ul>
 <li>27.7 million papers in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>,</li>
 <li>includes 4.7 million full-text records available in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed Central</a></li>
-<li><a href="http://www.ncbi.nlm.nih.gov/nuccore">The NCBI Nucleotide Database</a> (which includes GenBank) has data for 245.4 million different sequences</li>
+<li><a href="http://www.ncbi.nlm.nih.gov/nuccore">The NCBI Nucleotide Database</a> (which includes GenBank) has data for 245.5 million different sequences</li>
 <li><a href="http://www.ncbi.nlm.nih.gov/snp/">dbSNP</a> describes 1070.2 million different genetic variants</li>
 </ul>
 <p>All records can be cross-referenced with the 1.3 million species in the <a href="www.ncbi.nlm.nih.gov/taxonomy">NCBI taxonomy</a> or 25.2 thousand disease-associated records in <a href="http://www.ncbi.nlm.nih.gov/omim">OMIM</a>.</p>
@@ -300,8 +300,44 @@ install_github(&quot;ropensci/rentrez&quot;)</code></pre>
 <li>Check out <a href="https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers" class="uri">https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers</a> for more information on the search term <strong>qualifiers</strong>.</li>
 </ul>
 </div>
-<div id="a-simple-example-find-by-doi" class="section level2">
-<h2>A Simple Example: Find by DOI</h2>
+<div id="search-terms-entrez_search" class="section level2">
+<h2>Search Terms: <code>entrez_search()</code></h2>
+<ul>
+<li>More often what you’ll want to do with <code>rentrez</code> is search a given NCBI database to find records that match some keywords</li>
+<li>We use the function <code>entrez_search()</code> to do this</li>
+<li>Simplest case you just need to provide a database name (<code>db</code>) and a search term (<code>term</code>) so let’s search PubMed for articles about the <code>Natural Language Processing</code>:</li>
+</ul>
+<pre class="r"><code>r_search &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;Natural Language Processing&quot;)</code></pre>
+<ul>
+<li>The object returned by a search acts like a <code>list</code>, and you can get a summary of its contents by printing it.</li>
+</ul>
+<pre class="r"><code>r_search</code></pre>
+<pre><code># Entrez search result with 4811 hits (object contains 20 IDs and no web_history object)
+#  Search term (as translated):  &quot;natural language processing&quot;[MeSH Terms] OR (&quot;nat ...</code></pre>
+<ul>
+<li>NCBI’s server has worked out that we meant NPL, and so included the <a href="http://www.ncbi.nlm.nih.gov/mesh">‘MeSH’ term</a></li>
+<li>there are many more ‘hits’ for this search than there are unique IDs contained in this object. That’s because the optional argument <code>retmax</code>, which controls the maximum number of returned values has a default value of 20.</li>
+<li>The IDs are the most important thing returned here. They allow us to fetch records matching those IDs, gather summary data about them or find cross-referenced records in other databases.</li>
+<li>We access the IDs as a vector using the <code>$</code> operator:</li>
+</ul>
+<pre class="r"><code>r_search$ids</code></pre>
+<pre><code>#  [1] &quot;28971429&quot; &quot;28967001&quot; &quot;28964503&quot; &quot;28962645&quot; &quot;28954419&quot; &quot;28952936&quot;
+#  [7] &quot;28950906&quot; &quot;28945588&quot; &quot;28940969&quot; &quot;28938912&quot; &quot;28936186&quot; &quot;28935617&quot;
+# [13] &quot;28933506&quot; &quot;28932767&quot; &quot;28924815&quot; &quot;28924564&quot; &quot;28919830&quot; &quot;28916254&quot;
+# [19] &quot;28906424&quot; &quot;28905434&quot;</code></pre>
+<ul>
+<li>let’s set the retmax up to retrieve more ids</li>
+</ul>
+<pre class="r"><code>another_r_search &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;Natural Language Processing&quot;, retmax=40)
+another_r_search</code></pre>
+<pre><code># Entrez search result with 4811 hits (object contains 40 IDs and no web_history object)
+#  Search term (as translated):  &quot;natural language processing&quot;[MeSH Terms] OR (&quot;nat ...</code></pre>
+<ul>
+<li>If we want to get IDs for all of the thousands of records that match this search, we can use the NCBI’s web history feature.</li>
+</ul>
+</div>
+<div id="a-simple-example-find-by-doi-using-entrez_search" class="section level2">
+<h2>A Simple Example: Find by DOI using <code>entrez_search()</code></h2>
 <p><strong>Use a DOI to return the PMID of an article using <code>entrez_search</code></strong></p>
 <p>Use an article DOI: <a href="http://dx.doi.org/10.1007/s10689-007-9171-7">Cancer risk reduction and reproductive concerns in female BRCA1/2 mutation carriers</a>. DOI of 10.1007/s10689-007-9171-7.</p>
 <pre class="r"><code>wcancer_paper &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;10.1002/ijc.21536[doi]&quot;)
@@ -335,42 +371,6 @@ wcan_summary$title</code></pre>
 # 19                                          Sun P         Author          
 # 20                                       Narod SA         Author          
 # 21 Hereditary Breast Cancer Clinical Study Group. CollectiveName</code></pre>
-</div>
-<div id="search-terms-entrez_search" class="section level2">
-<h2>Search Terms: <code>entrez_search()</code></h2>
-<ul>
-<li>More often what you’ll want to do with <code>rentrez</code> is search a given NCBI database to find records that match some keywords</li>
-<li>We use the function <code>entrez_search()</code> to do this</li>
-<li>Simplest case you just need to provide a database name (<code>db</code>) and a search term (<code>term</code>) so let’s search PubMed for articles about the <code>Natural Language Processing</code>:</li>
-</ul>
-<pre class="r"><code>r_search &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;Natural Language Processing&quot;)</code></pre>
-<ul>
-<li>The object returned by a search acts like a <code>list</code>, and you can get a summary of its contents by printing it.</li>
-</ul>
-<pre class="r"><code>r_search</code></pre>
-<pre><code># Entrez search result with 4810 hits (object contains 20 IDs and no web_history object)
-#  Search term (as translated):  &quot;natural language processing&quot;[MeSH Terms] OR (&quot;nat ...</code></pre>
-<ul>
-<li>NCBI’s server has worked out that we meant NPL, and so included the <a href="http://www.ncbi.nlm.nih.gov/mesh">‘MeSH’ term</a></li>
-<li>there are many more ‘hits’ for this search than there are unique IDs contained in this object. That’s because the optional argument <code>retmax</code>, which controls the maximum number of returned values has a default value of 20.</li>
-<li>The IDs are the most important thing returned here. They allow us to fetch records matching those IDs, gather summary data about them or find cross-referenced records in other databases.</li>
-<li>We access the IDs as a vector using the <code>$</code> operator:</li>
-</ul>
-<pre class="r"><code>r_search$ids</code></pre>
-<pre><code>#  [1] &quot;28971429&quot; &quot;28967001&quot; &quot;28964503&quot; &quot;28962645&quot; &quot;28954419&quot; &quot;28952936&quot;
-#  [7] &quot;28950906&quot; &quot;28945588&quot; &quot;28940969&quot; &quot;28938912&quot; &quot;28936186&quot; &quot;28935617&quot;
-# [13] &quot;28933506&quot; &quot;28932767&quot; &quot;28924815&quot; &quot;28924564&quot; &quot;28919830&quot; &quot;28916254&quot;
-# [19] &quot;28906424&quot; &quot;28905434&quot;</code></pre>
-<ul>
-<li>let’s set the retmax up to retrieve more ids</li>
-</ul>
-<pre class="r"><code>another_r_search &lt;- entrez_search(db=&quot;pubmed&quot;, term=&quot;Natural Language Processing&quot;, retmax=40)
-another_r_search</code></pre>
-<pre><code># Entrez search result with 4810 hits (object contains 40 IDs and no web_history object)
-#  Search term (as translated):  &quot;natural language processing&quot;[MeSH Terms] OR (&quot;nat ...</code></pre>
-<ul>
-<li>If we want to get IDs for all of the thousands of records that match this search, we can use the NCBI’s web history feature.</li>
-</ul>
 </div>
 <div id="using-search-field-operators" class="section level2">
 <h2>Using search field operators</h2>

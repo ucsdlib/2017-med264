@@ -116,25 +116,6 @@ entrez_db_searchable("sra")
 
 * Check out <https://www.ncbi.nlm.nih.gov/entrez/query/static/help/Summary_Matrices.html#Search_Fields_and_Qualifiers> for more information on the search term **qualifiers**. 
 
-## A Simple Example: Find by DOI
-
-**Use a DOI to return the PMID of an article using `entrez_search`** 
-
-Use an article DOI: 
-[Cancer risk reduction and reproductive concerns in female BRCA1/2 mutation carriers](http://dx.doi.org/10.1007/s10689-007-9171-7). DOI of 10.1007/s10689-007-9171-7. 
-
-```{r}
-wcancer_paper <- entrez_search(db="pubmed", term="10.1002/ijc.21536[doi]")
-
-wcancer_paper$ids
-```
-
-**Get some summary info**
-```{r}
-wcan_summary <- entrez_summary(db="pubmed", wcancer_paper$ids)
-wcan_summary$title
-wcan_summary$authors
-```
 
 
 
@@ -175,6 +156,28 @@ another_r_search
 
 * If we want to get IDs for all of the thousands of records that match this
 search, we can use the NCBI's web history feature. 
+
+
+## A Simple Example: Find by DOI using `entrez_search()`
+
+**Use a DOI to return the PMID of an article using `entrez_search`** 
+
+Use an article DOI: 
+[Cancer risk reduction and reproductive concerns in female BRCA1/2 mutation carriers](http://dx.doi.org/10.1007/s10689-007-9171-7). DOI of 10.1007/s10689-007-9171-7. 
+
+```{r}
+wcancer_paper <- entrez_search(db="pubmed", term="10.1002/ijc.21536[doi]")
+
+wcancer_paper$ids
+```
+
+**Get some summary info**
+```{r}
+wcan_summary <- entrez_summary(db="pubmed", wcancer_paper$ids)
+wcan_summary$title
+wcan_summary$authors
+```
+
 
 ## Using search field operators
 
