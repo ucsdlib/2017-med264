@@ -1,0 +1,236 @@
+---
+title: "MED264 Rentrez Lesson Notes"
+output: html_notebook
+date: "10/05/2017"
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+```{r}
+
+```
+
+
+```{r}
+install.packages("rentrez")
+```
+
+```{r}
+library(rentrez)
+```
+
+```{r}
+entrez_dbs()
+```
+
+
+Helper Functions that help you learn about NCBI databases
+
+Function name	Return
+entrez_db_summary()	Brief description of what the database is
+entrez_db_searchable()	Set of search terms that can used with this database
+entrez_db_links()	Set of databases that might contain linked records
+
+```{r}
+entrez_db_summary("dbvar")
+```
+```{r}
+entrez_db_searchable("sra")
+```
+```{r}
+r_search <- entrez_search(db="pubmed", term="natural language processing")
+```
+
+```{r}
+r_search
+```
+
+```{r}
+r_search$ids
+```
+```{r}
+another_r_search <- entrez_search(db="pubmed", term="natural language processing", retmax=40)
+another_r_search
+```
+
+```{r}
+another_r_search$ids
+```
+
+10.1007/s10689-007-9171-7
+
+```{r}
+wcancer_paper <- entrez_search(db="pubmed", term="10.1007/s10689-007-9171-7[doi]")
+
+```
+
+```{r}
+wcancer_paper$ids
+```
+```{r}
+wcan_summary <- entrez_summary(db="pubmed", wcancer_paper$ids)
+```
+
+```{r}
+wcan_summary$title
+```
+
+```{r}
+wcan_summary$authors
+```
+
+```{r}
+entrez_search(db="sra",
+              term="tetrahymena thermophila[ORGN]", retmax=0)
+```
+
+```{r}
+entrez_search(db="sra",
+              term="tetrahymena thermophila[ORGN] AND 2013:2015[PDAT]", retmax=0)
+```
+
+```{r}
+entrez_search(db="sra",
+              term="(tetrahymena thermophila[ORGN] OR tetrahymena borealis[ORGN]) AND 2013:2015[PDAT]", retmax=0)
+```
+
+```{r}
+entrez_db_searchable("sra")
+```
+```{r}
+entrez_search(db="pubmed", 
+              term="(vivax malaria[MeSH] AND (folic acid antagonists[MeSH])")
+```
+
+```{r}
+all_the_links <- entrez_link(dbfrom='gene', id=351, db='all')
+```
+
+```{r}
+all_the_links
+```
+
+```{r}
+all_the_links$links
+```
+
+```{r}
+all_the_links$links$gene_pmc[1:10]
+```
+
+```{r}
+all_the_links$links$gene_clinvar
+```
+
+```{r}
+nuc_links <- entrez_link(dbfrom="gene", id=351, db="nuccore")
+nuc_links
+```
+
+```{r}
+nuc_links$links
+```
+
+```{r}
+nuc_links$links$gene_nuccore_refseqrna
+```
+```{r}
+paper_links <- entrez_link(dbfrom="pubmed", id=25500142, cmd="llinks")
+paper_links
+```
+```{r}
+paper_links$linkouts
+```
+```{r}
+linkout_urls(paper_links)
+```
+
+```{r}
+?entrez_link
+```
+
+
+
+```{r}
+all_links_together <- entrez_link(db="protein", dbfrom="gene", id=c("93100", "223646"))
+all_links_together
+```
+all_links_together$links
+```{r}
+all_links_together$links
+
+```
+```{r}
+all_links_together$links$gene_protein
+```
+
+```{r}
+all_links_sep <- entrez_link(db="protein", dbfrom="gene", id=c("93100", "223646"), by_id=TRUE)
+all_links_sep
+```
+```{r}
+lapply(all_links_sep, function(x)  x$links$gene_protein)
+```
+```{r}
+taxize_summ <- entrez_summary(db="pubmed", id=24555091)
+taxize_summ
+```
+
+
+```{r}
+taxize_summ$articleids
+```
+
+```{r}
+taxize_summ$pmcrefcount
+```
+
+```{r}
+vivax_search <- entrez_search(db ="pubmed",
+                               term= "(vivax malaria[MeSH]) AND (folic acid antagonists[MeSH])")
+multi_summs <- entrez_summary(db="pubmed", id=vivax_search$ids)
+```
+```{r}
+extract_from_esummary(multi_summs, "fulljournalname")
+```
+data_and_cite <- e
+```{r}
+date_and_cite <- extract_from_esummary(multi_summs, c("pubdate", "pmcrefcount", "title"))
+knitr::kable(head(t(date_and_cite)), row.names = FALSE)
+```
+```{r}
+gene_ids <- c(351, 11647)
+linked_seq_ids <- entrez_link(dbfrom="gene", id=gene_ids, db="nuccore")
+linked_transcripts <- linked_seq_ids$links$gene_nuccore_refseqrna
+head(linked_transcripts)
+```
+```{r}
+all_recs <- entrez_fetch(db="nuccore", id=linked_transcripts, rettype = "fasta")
+class(all_recs)
+```
+```{r}
+nchar(all_recs)
+```
+
+```{r}
+cat(strwrap(substr(all_recs, 1, 500)), sep = "\n")
+```
+
+```{r}
+write(all_recs, file = "my_transciripts.fasta")
+```
+
+```{r}
+getwd()
+```
+
